@@ -13,18 +13,21 @@ class ProductManager {
 
   bool addNewProduct() {
     print('Enter the name: ');
-
     String name = stdin.readLineSync() ?? '';
+
     print('Enter the description: ');
     String description = stdin.readLineSync() ?? '';
+
     print('Enter the price: ');
     String temp = stdin.readLineSync() ?? '';
+
     double price = double.tryParse(temp) ?? 0;
     if (name == '' || description == '' || price == 0) {
       print('Please enter valid data');
       return false;
     }
     products[name] = Product(name, description, price);
+
     return true;
   }
 
@@ -41,6 +44,7 @@ class ProductManager {
   void viewSingleProduct() {
     print('please enter product name: ');
     String productName = stdin.readLineSync() ?? '';
+
     if (products.containsKey(productName)) {
       print('Product Name: $productName');
       print('Product Description: ${products[productName]?.description}');
