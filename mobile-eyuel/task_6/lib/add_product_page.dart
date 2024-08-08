@@ -73,7 +73,7 @@ class AddProductPage extends StatelessWidget {
           width: double.infinity,
           height: 50,
           decoration: BoxDecoration(
-            color: Color.fromRGBO(63, 81, 243, 1),
+            color: const Color.fromRGBO(63, 81, 243, 1),
             borderRadius: BorderRadius.circular(10),
           ),
           child: const Text(
@@ -123,7 +123,7 @@ class AddProductPage extends StatelessWidget {
     return BackButton(
       style: ButtonStyle(
         iconColor: MaterialStateColor.resolveWith(
-            (states) => Color.fromRGBO(63, 81, 243, 1)),
+            (states) => const Color.fromRGBO(63, 81, 243, 1)),
       ),
       onPressed: () {
         Navigator.pop(context);
