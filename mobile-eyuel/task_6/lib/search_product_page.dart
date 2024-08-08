@@ -86,7 +86,7 @@ class _SearchProductState extends State<SearchProduct> {
             height: 40,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(7),
-              color: Color.fromRGBO(63, 81, 243, 1),
+              color: const Color.fromRGBO(63, 81, 243, 1),
             ),
             child: const Icon(
               Icons.filter_list,
@@ -138,7 +138,7 @@ class _BottomSheetComponentState extends State<BottomSheetComponent> {
   RangeSlider rangeWidget() {
     return RangeSlider(
       values: _currentRangeValues,
-      activeColor: Color.fromRGBO(63, 81, 243, 1),
+      activeColor: const Color.fromRGBO(63, 81, 243, 1),
       inactiveColor: Colors.grey.shade300,
       onChanged: (RangeValues value) {
         setState(() {
@@ -175,7 +175,7 @@ class _BottomSheetComponentState extends State<BottomSheetComponent> {
   Widget priceRange() {
     return RangeSlider(
       values: _currentRangeValues,
-      activeColor: Color.fromRGBO(63, 81, 243, 1),
+      activeColor: const Color.fromRGBO(63, 81, 243, 1),
       inactiveColor: Colors.grey.shade200,
       onChanged: (RangeValues value) {
         setState(() {
@@ -195,7 +195,7 @@ class _BottomSheetComponentState extends State<BottomSheetComponent> {
           width: double.infinity,
           height: 50,
           decoration: BoxDecoration(
-            color: Color.fromRGBO(63, 81, 243, 1),
+            color: const Color.fromRGBO(63, 81, 243, 1),
             borderRadius: BorderRadius.circular(10),
           ),
           child: const Text(

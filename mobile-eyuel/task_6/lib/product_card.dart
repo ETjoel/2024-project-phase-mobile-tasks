@@ -1,11 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:task_6/product_model.dart';
 
 import 'detail_page.dart';
 
 class ListProduct extends StatelessWidget {
-  const ListProduct({
+  ListProduct({
     super.key,
   });
+
+  final Product product = Product(
+    'Derby Leather Shoes',
+    'Men\'s Shoes',
+    120,
+    'A derby leather shoe is a classic and versatile footwear option characterized by its open lacing system, where the shoelace eyelets are sewn on top of the vamp (the upper part of the shoe). This design feature provides a more relaxed and casual look compared to the closed lacing system of oxford shoes. Derby shoes are typically made of high-quality leather, known for its durability and elegance, making them suitable for both formal and casual occasions. With their timeless style and comfortable fit, derby leather shoes are a staple in any well-rounded wardrobe.',
+    'images/lv_shoe.jpeg',
+    42,
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -17,12 +27,30 @@ class ListProduct extends StatelessWidget {
           padding: const EdgeInsets.only(top: 5, bottom: 5),
           child: GestureDetector(
             onTap: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) {
-                return const DetailPage();
-              }));
+              Navigator.push(context, pageTransition());
             },
             child: const ProductCards(),
           ),
+        );
+      },
+    );
+  }
+
+  PageRouteBuilder<dynamic> pageTransition() {
+    return PageRouteBuilder(
+      pageBuilder: (context, animation, secondaryAnimation) =>
+          DetailPage(product: product),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        const begin = Offset(1.0, 0.0);
+        const end = Offset.zero;
+        const curve = Curves.easeInOut;
+
+        var tween =
+            Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+
+        return SlideTransition(
+          position: animation.drive(tween),
+          child: child,
         );
       },
     );

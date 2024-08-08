@@ -16,22 +16,43 @@ class HomePage extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         shape: const CircleBorder(),
-        backgroundColor: Color.fromRGBO(63, 81, 243, 1),
+        backgroundColor: const Color.fromRGBO(63, 81, 243, 1),
         onPressed: () {
-          Navigator.of(context).push(
-            MaterialPageRoute(builder: (context) => AddProductPage()),
+          Navigator.push(
+            context,
+            pageTransition(),
           );
         },
         child: const Icon(Icons.add, color: Colors.white),
       ),
-      body: const Column(
+      body: Column(
         children: [
-          SearchComponent(),
+          const SearchComponent(),
           Expanded(
             child: ListProduct(),
           ),
         ],
       ),
+    );
+  }
+
+  PageRouteBuilder<dynamic> pageTransition() {
+    return PageRouteBuilder(
+      pageBuilder: (context, animation, secondaryAnimation) =>
+          const AddProductPage(),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        const begin = Offset(1.0, 0.0);
+        const end = Offset.zero;
+        const curve = Curves.easeInOut;
+
+        var tween =
+            Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+
+        return SlideTransition(
+          position: animation.drive(tween),
+          child: child,
+        );
+      },
     );
   }
 }
@@ -52,8 +73,10 @@ class SearchComponent extends StatelessWidget {
           const Spacer(),
           TextButton(
             onPressed: () {
-              Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => const SearchProduct()));
+              Navigator.push(
+                context,
+                pageTransition(),
+              );
             },
             child: Container(
                 width: 30,
@@ -68,6 +91,26 @@ class SearchComponent extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+
+  PageRouteBuilder<dynamic> pageTransition() {
+    return PageRouteBuilder(
+      pageBuilder: (context, animation, secondaryAnimation) =>
+          const SearchProduct(),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        const begin = Offset(1.0, 0.0);
+        const end = Offset.zero;
+        const curve = Curves.easeInOut;
+
+        var tween =
+            Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+
+        return SlideTransition(
+          position: animation.drive(tween),
+          child: child,
+        );
+      },
     );
   }
 }

@@ -1,14 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:task_6/product_model.dart';
 
 class DetailPage extends StatefulWidget {
-  const DetailPage({super.key});
+  const DetailPage({super.key, required this.product});
+  final Product product;
 
   @override
   State<DetailPage> createState() => _DetailPageState();
 }
 
 class _DetailPageState extends State<DetailPage> {
-  int selectedSize = -1;
+  late int selectedSize;
+
+  @override
+  void initState() {
+    super.initState();
+    selectedSize = widget.product.size;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,11 +51,12 @@ class _DetailPageState extends State<DetailPage> {
             ),
           ),
           selectSize(),
-          const Padding(
-            padding: EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 10),
+          Padding(
+            padding:
+                const EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 10),
             child: Text(
-              'A derby leather shoe is a classic and versatile footwear option characterized by its open lacing system, where the shoelace eyelets are sewn on top of the vamp (the upper part of the shoe). This design feature provides a more relaxed and casual look compared to the closed lacing system of oxford shoes. Derby shoes are typically made of high-quality leather, known for its durability and elegance, making them suitable for both formal and casual occasions. With their timeless style and comfortable fit, derby leather shoes are a staple in any well-rounded wardrobe.',
-              style: TextStyle(fontSize: 16.0),
+              widget.product.description,
+              style: const TextStyle(fontSize: 16.0),
             ),
           ),
           deleteAndUpdate(),
@@ -67,7 +76,7 @@ class _DetailPageState extends State<DetailPage> {
       child: Row(
         children: [
           deleteProduct(),
-          Spacer(),
+          const Spacer(),
           updateProduct(),
         ],
       ),
@@ -82,7 +91,7 @@ class _DetailPageState extends State<DetailPage> {
           width: 150,
           height: 50,
           decoration: BoxDecoration(
-            color: Color.fromRGBO(63, 81, 243, 1),
+            color: const Color.fromRGBO(63, 81, 243, 1),
             borderRadius: BorderRadius.circular(10),
           ),
           child: const Text(
@@ -116,12 +125,12 @@ class _DetailPageState extends State<DetailPage> {
       child: ListView.builder(
         padding: const EdgeInsets.all(15),
         itemCount: 10,
-        itemExtent: null, // remove the itemExtent property
+        itemExtent: null,
         scrollDirection: Axis.horizontal,
         itemBuilder: (context, index) {
           return SizedBox(
             height: 60,
-            width: 60, // specify the width to 60
+            width: 60,
             child: GestureDetector(
               onTap: () {
                 setState(() {
@@ -152,8 +161,8 @@ class _DetailPageState extends State<DetailPage> {
   }
 
   Padding nameAndprice() {
-    return const Padding(
-      padding: EdgeInsets.only(
+    return Padding(
+      padding: const EdgeInsets.only(
         left: 20,
         right: 20,
         top: 10,
@@ -162,22 +171,22 @@ class _DetailPageState extends State<DetailPage> {
       child: Row(
         children: [
           Text(
-            'Derby Leather Shoes',
-            style: TextStyle(
+            widget.product.name,
+            style: const TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
             ),
           ),
-          Spacer(),
-          Text('\$120'),
+          const Spacer(),
+          Text('\$${widget.product.price}'),
         ],
       ),
     );
   }
 
   Padding typeAndRating() {
-    return const Padding(
-      padding: EdgeInsets.only(
+    return Padding(
+      padding: const EdgeInsets.only(
         left: 20,
         right: 20,
         top: 10,
@@ -185,10 +194,10 @@ class _DetailPageState extends State<DetailPage> {
       ),
       child: Row(
         children: [
-          Text("Men's Shoe"),
-          Spacer(),
-          Icon(Icons.star, color: Colors.yellow),
-          Text('(4.0)'),
+          Text(widget.product.category),
+          const Spacer(),
+          const Icon(Icons.star, color: Colors.yellow),
+          const Text('(4.0)'),
         ],
       ),
     );
@@ -201,7 +210,7 @@ class _DetailPageState extends State<DetailPage> {
       child: ClipRect(
         child: FittedBox(
           fit: BoxFit.cover,
-          child: Image.asset('images/lv_shoe.jpeg'),
+          child: Image.asset(widget.product.imageUrl),
         ),
       ),
     );
@@ -217,8 +226,8 @@ class _DetailPageState extends State<DetailPage> {
         Navigator.pop(context);
       },
       child: const Center(
-        child: Icon(Icons.arrow_back_ios,
-            size: 20, color: Color.fromRGBO(63, 81, 243, 1)),
+        child: Icon(Icons.chevron_left,
+            size: 30, color: Color.fromRGBO(63, 81, 243, 1)),
       ),
     );
   }
