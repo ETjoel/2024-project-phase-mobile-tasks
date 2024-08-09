@@ -16,122 +16,46 @@ class AddProductPage extends StatelessWidget {
                 color: Color.fromRGBO(63, 81, 243, 1))),
         title: const Text('Add Product'),
       ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(20),
+      body: const SingleChildScrollView(
+        padding: EdgeInsets.all(20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            uploadImage(),
-            const SizedBox(height: 10),
-            const Text('name'),
-            const SizedBox(height: 10),
-            nameTextField(),
-            const SizedBox(height: 10),
-            const Text('category'),
-            const SizedBox(height: 10),
-            nameTextField(),
-            const SizedBox(height: 10),
-            const Text('price'),
-            const SizedBox(height: 10),
-            nameTextField(),
-            const SizedBox(height: 10),
-            const Text('description'),
-            const SizedBox(height: 10),
-            descriptionTextField(),
-            const SizedBox(height: 10),
-            addButton(),
-            const SizedBox(height: 5),
-            deleteButton(),
+            UploadImage(),
+            SizedBox(height: 10),
+            Text('name'),
+            SizedBox(height: 10),
+            CustomTextField(),
+            SizedBox(height: 10),
+            Text('category'),
+            SizedBox(height: 10),
+            CustomTextField(),
+            SizedBox(height: 10),
+            Text('price'),
+            SizedBox(height: 10),
+            CustomTextField(),
+            SizedBox(height: 10),
+            Text('description'),
+            SizedBox(height: 10),
+            DescriptionTextField(),
+            SizedBox(height: 10),
+            AddButton(),
+            SizedBox(height: 5),
+            DeleteButton(),
           ],
         ),
       ),
     );
   }
+}
 
-  TextButton deleteButton() {
-    return TextButton(
-        onPressed: () {},
-        child: Container(
-          alignment: Alignment.center,
-          width: double.infinity,
-          height: 50,
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              border: Border.all(width: 2, color: Colors.redAccent)),
-          child: const Text(
-            'Delete',
-            style: TextStyle(color: Colors.redAccent, fontSize: 20),
-          ),
-        ));
-  }
+class UploadImage extends StatelessWidget {
+  const UploadImage({
+    super.key,
+  });
 
-  TextButton addButton() {
-    return TextButton(
-        onPressed: () {},
-        child: Container(
-          alignment: Alignment.center,
-          width: double.infinity,
-          height: 50,
-          decoration: BoxDecoration(
-            color: const Color.fromRGBO(63, 81, 243, 1),
-            borderRadius: BorderRadius.circular(10),
-          ),
-          child: const Text(
-            'Add',
-            style: TextStyle(color: Colors.white, fontSize: 20),
-          ),
-        ));
-  }
-
-  Container nameTextField() {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.grey.shade200,
-        borderRadius: BorderRadius.circular(10),
-      ),
-      clipBehavior: Clip.hardEdge,
-      child: TextField(
-        decoration: InputDecoration(
-          fillColor: Colors.grey.shade200,
-          filled: true,
-          border: InputBorder.none,
-        ),
-      ),
-    );
-  }
-
-  Container descriptionTextField() {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.grey.shade200,
-        borderRadius: BorderRadius.circular(10),
-      ),
-      clipBehavior: Clip.hardEdge,
-      child: TextField(
-        minLines: 5,
-        maxLines: 10,
-        decoration: InputDecoration(
-          fillColor: Colors.grey.shade200,
-          filled: true,
-          border: InputBorder.none,
-        ),
-      ),
-    );
-  }
-
-  BackButton backButton(BuildContext context) {
-    return BackButton(
-      style: ButtonStyle(
-        iconColor: MaterialStateColor.resolveWith(
-            (states) => const Color.fromRGBO(63, 81, 243, 1)),
-      ),
-      onPressed: () {
-        Navigator.pop(context);
-      },
-    );
-  }
-
-  Widget uploadImage() {
+  @override
+  Widget build(BuildContext context) {
     return Container(
         width: 366,
         height: 200,
@@ -151,6 +75,127 @@ class AddProductPage extends StatelessWidget {
             ),
             Text('Upload Image'),
           ],
+        ));
+  }
+}
+
+class CustomBackButton extends StatelessWidget {
+  const CustomBackButton({
+    super.key,
+    required this.context,
+  });
+
+  final BuildContext context;
+
+  @override
+  Widget build(BuildContext context) {
+    return BackButton(
+      style: ButtonStyle(
+        iconColor: MaterialStateColor.resolveWith(
+            (states) => const Color.fromRGBO(63, 81, 243, 1)),
+      ),
+      onPressed: () {
+        Navigator.pop(context);
+      },
+    );
+  }
+}
+
+class DescriptionTextField extends StatelessWidget {
+  const DescriptionTextField({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.grey.shade200,
+        borderRadius: BorderRadius.circular(10),
+      ),
+      clipBehavior: Clip.hardEdge,
+      child: TextField(
+        minLines: 5,
+        maxLines: 10,
+        decoration: InputDecoration(
+          fillColor: Colors.grey.shade200,
+          filled: true,
+          border: InputBorder.none,
+        ),
+      ),
+    );
+  }
+}
+
+class CustomTextField extends StatelessWidget {
+  const CustomTextField({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.grey.shade200,
+        borderRadius: BorderRadius.circular(10),
+      ),
+      clipBehavior: Clip.hardEdge,
+      child: TextField(
+        decoration: InputDecoration(
+          fillColor: Colors.grey.shade200,
+          filled: true,
+          border: InputBorder.none,
+        ),
+      ),
+    );
+  }
+}
+
+class AddButton extends StatelessWidget {
+  const AddButton({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return TextButton(
+        onPressed: () {},
+        child: Container(
+          alignment: Alignment.center,
+          width: double.infinity,
+          height: 50,
+          decoration: BoxDecoration(
+            color: const Color.fromRGBO(63, 81, 243, 1),
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: const Text(
+            'Add',
+            style: TextStyle(color: Colors.white, fontSize: 20),
+          ),
+        ));
+  }
+}
+
+class DeleteButton extends StatelessWidget {
+  const DeleteButton({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return TextButton(
+        onPressed: () {},
+        child: Container(
+          alignment: Alignment.center,
+          width: double.infinity,
+          height: 50,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              border: Border.all(width: 2, color: Colors.redAccent)),
+          child: const Text(
+            'Delete',
+            style: TextStyle(color: Colors.redAccent, fontSize: 20),
+          ),
         ));
   }
 }
