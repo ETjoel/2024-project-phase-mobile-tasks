@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:task_6/product_model.dart';
+import 'product_model.dart';
 
 class DetailPage extends StatefulWidget {
   const DetailPage({super.key, required this.product});

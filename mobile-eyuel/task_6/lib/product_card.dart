@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:task_6/product_model.dart';
 
 import 'detail_page.dart';
+import 'product_model.dart';
 
 class ListProduct extends StatelessWidget {
   ListProduct({
@@ -12,7 +12,15 @@ class ListProduct extends StatelessWidget {
     'Derby Leather Shoes',
     'Men\'s Shoes',
     120,
-    'A derby leather shoe is a classic and versatile footwear option characterized by its open lacing system, where the shoelace eyelets are sewn on top of the vamp (the upper part of the shoe). This design feature provides a more relaxed and casual look compared to the closed lacing system of oxford shoes. Derby shoes are typically made of high-quality leather, known for its durability and elegance, making them suitable for both formal and casual occasions. With their timeless style and comfortable fit, derby leather shoes are a staple in any well-rounded wardrobe.',
+    '''A derby leather shoe is a classic and versatile 
+    footwear option characterized by its open lacing system, 
+    where the shoelace eyelets are sewn on top of the vamp 
+    (the upper part of the shoe). This design feature provides a more 
+    relaxed and casual look compared to the closed lacing system of 
+    oxford shoes. Derby shoes are typically made of high-quality leather, 
+    known for its durability and elegance, making them suitable for both formal and 
+    casual occasions. With their timeless style and comfortable fit, 
+    derby leather shoes are a staple in any well-rounded wardrobe.''',
     'images/lv_shoe.jpeg',
     42,
   );

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:task_6/add_product_page.dart';
-import 'package:task_6/product_card.dart';
-import 'package:task_6/search_product_page.dart';
+
+import '../add_product_page.dart';
+import '../product_card.dart';
+import '../search_product_page.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
