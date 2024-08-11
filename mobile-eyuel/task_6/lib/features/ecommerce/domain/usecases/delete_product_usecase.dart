@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
 
-import '../../core/failure.dart';
+import '../../../../core/failure.dart';
 import '../repositories/product_respository.dart';
 
 class DeleteProductUsecase {

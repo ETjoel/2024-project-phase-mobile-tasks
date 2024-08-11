@@ -8,8 +8,9 @@ import 'dart:async' as _i4;
 import 'package:dartz/dartz.dart' as _i2;
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:task_6/core/failure.dart' as _i5;
-import 'package:task_6/domain/entities/product.dart' as _i6;
-import 'package:task_6/domain/repositories/product_respository.dart' as _i3;
+import 'package:task_6/features/ecommerce/domain/entities/product.dart' as _i6;
+import 'package:task_6/features/ecommerce/domain/repositories/product_respository.dart'
+    as _i3;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -41,22 +42,24 @@ class MockProductRepository extends _i1.Mock implements _i3.ProductRepository {
   }
 
   @override
-  _i4.Future<_i2.Either<_i5.Failure, List<_i6.ProductEntity>>>
-      getAllProducts() => (super.noSuchMethod(
-            Invocation.method(
-              #getAllProducts,
-              [],
-            ),
-            returnValue: _i4
-                .Future<_i2.Either<_i5.Failure, List<_i6.ProductEntity>>>.value(
+  _i4.Future<
+      _i2
+          .Either<_i5.Failure, List<_i6.ProductEntity>>> getAllProducts() =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #getAllProducts,
+          [],
+        ),
+        returnValue:
+            _i4.Future<_i2.Either<_i5.Failure, List<_i6.ProductEntity>>>.value(
                 _FakeEither_0<_i5.Failure, List<_i6.ProductEntity>>(
-              this,
-              Invocation.method(
-                #getAllProducts,
-                [],
-              ),
-            )),
-          ) as _i4.Future<_i2.Either<_i5.Failure, List<_i6.ProductEntity>>>);
+          this,
+          Invocation.method(
+            #getAllProducts,
+            [],
+          ),
+        )),
+      ) as _i4.Future<_i2.Either<_i5.Failure, List<_i6.ProductEntity>>>);
 
   @override
   _i4.Future<_i2.Either<_i5.Failure, _i6.ProductEntity>> getSingleProduct(

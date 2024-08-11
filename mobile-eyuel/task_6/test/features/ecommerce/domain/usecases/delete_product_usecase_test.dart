@@ -1,9 +1,9 @@
 import 'package:dartz/dartz.dart';
 import 'package:mockito/mockito.dart';
-import 'package:task_6/domain/usecases/delete_product_usecase.dart';
+import 'package:task_6/features/ecommerce/domain/usecases/delete_product_usecase.dart';
 import 'package:test/test.dart';
 
-import '../../helper/test_helper.mocks.dart';
+import '../../../../helper/test_helper.mocks.dart';
 
 void main() {
   DeleteProductUsecase deleteProductUsecase =
