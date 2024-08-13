@@ -2,7 +2,7 @@ import '../../domain/entities/product.dart';
 
 class ProductModel extends ProductEntity {
   ProductModel(
-      {required int id,
+      {required String id,
       required String name,
       required double price,
       required String description,
@@ -18,7 +18,7 @@ class ProductModel extends ProductEntity {
     return ProductModel(
       id: json['id'],
       name: json['name'],
-      price: json['price'],
+      price: (json['price'] as num).toDouble(),
       description: json['description'],
       imageUrl: json['imageUrl'],
     );

@@ -18,7 +18,7 @@ void main() {
 
   var productDetail = [
     ProductEntity(
-        id: 1,
+        id: '1',
         name: 'shoe',
         description: 'just show shoe',
         imageUrl: 'imageUrl',

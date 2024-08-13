@@ -16,10 +16,10 @@ void main() {
   });
 
   test('should return null or failure', () async {
-    when(mockProductRepository.deleteProduct(1))
+    when(mockProductRepository.deleteProduct('1'))
         .thenAnswer((_) async => const Right(unit));
 
-    final result = await deleteProductUsecase.call(1);
+    final result = await deleteProductUsecase.call('1');
 
     expect(result, const Right(unit));
   });

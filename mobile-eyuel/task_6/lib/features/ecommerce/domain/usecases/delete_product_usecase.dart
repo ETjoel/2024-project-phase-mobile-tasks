@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
 
-import '../../../../core/failure.dart';
+import '../../../../core/errors/failure.dart';
 import '../repositories/product_respository.dart';
 
 class DeleteProductUsecase {
@@ -8,7 +8,7 @@ class DeleteProductUsecase {
 
   DeleteProductUsecase(this._productRepository);
 
-  Future<Either<Failure, Unit>> call(int id) async {
+  Future<Either<Failure, Unit>> call(String id) async {
     return await _productRepository.deleteProduct(id);
   }
 }

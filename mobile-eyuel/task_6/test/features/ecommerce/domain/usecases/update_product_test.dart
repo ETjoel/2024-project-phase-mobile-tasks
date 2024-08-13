@@ -17,7 +17,7 @@ void main() {
       });
 
   final product = ProductEntity(
-      id: 1,
+      id: '1',
       name: 'name',
       description: 'description',
       imageUrl: 'imageUrl',

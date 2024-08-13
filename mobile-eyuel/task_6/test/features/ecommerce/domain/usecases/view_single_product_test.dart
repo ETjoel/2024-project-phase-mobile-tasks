@@ -11,8 +11,8 @@ void main() {
       ViewProductUsecase(MockProductRepository());
   MockProductRepository mockProductRepository = MockProductRepository();
 
-  var productDetail = ProductEntity(
-      id: 1,
+  var productDetail = const ProductEntity(
+      id: '1',
       name: 'shoe',
       description: 'just show shoe',
       imageUrl: 'imageUrl',
@@ -23,10 +23,10 @@ void main() {
       });
 
   test('should get single product from repository', () async {
-    when(mockProductRepository.getSingleProduct(1))
+    when(mockProductRepository.getSingleProduct('1'))
         .thenAnswer((_) async => Right(productDetail));
 
-    final result = await viewProductUsecase.execute(1);
+    final result = await viewProductUsecase.execute('1');
 
     expect(result, Right(productDetail));
   });

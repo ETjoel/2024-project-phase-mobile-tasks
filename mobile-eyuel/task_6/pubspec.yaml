@@ -42,6 +42,7 @@ dependencies:
   get_it: ^7.6.7
   http: ^1.1.0
   rxdart: ^0.28.0
+  internet_connection_checker: ^1.0.0+1
   
 
 dev_dependencies:
