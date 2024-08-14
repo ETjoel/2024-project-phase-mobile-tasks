@@ -7,6 +7,7 @@ import '../../domain/entities/product.dart';
 import '../../domain/repositories/product_respository.dart';
 import '../datasource/product_local_datasource.dart';
 import '../datasource/product_remote_datasource.dart';
+import '../models/product_model.dart';
 
 class ProductRepositoryImpl implements ProductRepository {
   final ProductLocalDataSource productLocalDataSource;
@@ -67,7 +68,7 @@ class ProductRepositoryImpl implements ProductRepository {
   }
 
   @override
-  Future<Either<Failure, Unit>> updateProduct(ProductEntity product) async {
+  Future<Either<Failure, Unit>> updateProduct(ProductModel product) async {
     return _createOrUpdateOrDelete(() {
       productRemoteDatasource.updateProduct(product);
     });

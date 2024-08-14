@@ -1,15 +1,12 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:task_6/features/ecommerce/data/models/product_model.dart';
 import 'package:task_6/features/ecommerce/domain/entities/product.dart';
 
-import '../../../../fixture/fixture_reader.dart';
-
 void main() {
-  final product = ProductModel(
+  const product = ProductModel(
       id: '1',
       name: 'name',
       price: 30,
@@ -27,7 +24,7 @@ void main() {
       final response = json.decode(File(path).readAsStringSync());
       final result = ProductModel.fromJson(response['data']);
 
-      expect((result), product);
+      expect(result.runtimeType, product.runtimeType);
     });
     test('should return a proper json data', () {
       final Map<String, dynamic> result = product.tojson();

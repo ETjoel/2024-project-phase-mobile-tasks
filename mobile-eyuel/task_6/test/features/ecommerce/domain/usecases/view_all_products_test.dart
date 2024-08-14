@@ -17,7 +17,7 @@ void main() {
   });
 
   var productDetail = [
-    ProductEntity(
+    const ProductEntity(
         id: '1',
         name: 'shoe',
         description: 'just show shoe',

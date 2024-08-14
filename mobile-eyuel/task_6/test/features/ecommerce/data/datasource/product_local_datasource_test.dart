@@ -1,9 +1,7 @@
 import 'dart:convert';
-import 'dart:ffi';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
-import 'package:task_6/core/errors/exceptions.dart';
 import 'package:task_6/core/errors/failure.dart';
 import 'package:task_6/features/ecommerce/data/datasource/product_local_datasource.dart';
 import 'package:task_6/features/ecommerce/data/models/product_model.dart';
@@ -16,7 +14,7 @@ void main() {
       ProductLocalDataSourceImpl(sharedPreferences: mockSharedPreferences);
 
   final products = [
-    ProductModel(
+    const ProductModel(
         id: '1',
         name: 'name',
         price: 30.0,

@@ -1,7 +1,7 @@
 import '../../domain/entities/product.dart';
 
 class ProductModel extends ProductEntity {
-  ProductModel(
+  const ProductModel(
       {required String id,
       required String name,
       required double price,

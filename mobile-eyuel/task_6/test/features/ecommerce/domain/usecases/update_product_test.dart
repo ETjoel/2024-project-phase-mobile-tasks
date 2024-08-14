@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:mockito/mockito.dart';
-import 'package:task_6/features/ecommerce/domain/entities/product.dart';
+import 'package:task_6/features/ecommerce/data/models/product_model.dart';
 import 'package:task_6/features/ecommerce/domain/usecases/update_product.dart';
 import 'package:test/test.dart';
 
@@ -16,7 +16,7 @@ void main() {
         updateProductUsecase = UpdateProductUsecase(mockProductRepository)
       });
 
-  final product = ProductEntity(
+  const product = ProductModel(
       id: '1',
       name: 'name',
       description: 'description',

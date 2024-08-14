@@ -5,7 +5,6 @@ import 'package:task_6/core/errors/exceptions.dart';
 import 'package:task_6/core/errors/failure.dart';
 import 'package:task_6/features/ecommerce/data/models/product_model.dart';
 import 'package:task_6/features/ecommerce/data/repositories/product_respository_impl.dart';
-import 'package:task_6/features/ecommerce/domain/entities/product.dart';
 
 import '../../../../helper/test_helper.mocks.dart';
 
@@ -22,14 +21,13 @@ void main() {
       MockProductRemoteDatasource();
   MockNetworkInfo mockNetworkInfo = MockNetworkInfo();
 
-  final productModel = ProductModel(
+  const productModel = ProductModel(
       id: '1',
       name: 'shoe',
       description: 'just show shoe',
       imageUrl: 'imageUrl',
       price: 20.3);
 
-  final ProductEntity productEntity = productModel;
   final productModels = [productModel];
 
   void runTestOnline(Function body) {
@@ -81,7 +79,7 @@ void main() {
         final result = await productRepositoryImpl.getSingleProduct(id);
 
         verify(mockProductRemoteDatasource.getSingleProduct(id));
-        expect(result, Right(productModel));
+        expect(result, const Right(productModel));
       });
 
       test(
@@ -177,7 +175,7 @@ void main() {
       test('should return unit when the call to createProduct is successful',
           () async {
         when(mockProductRemoteDatasource.createProduct(productModel))
-            .thenAnswer((_) async => null);
+            .thenAnswer((_) async {});
 
         final result = await productRepositoryImpl.createProduct(productModel);
         verify(mockProductRemoteDatasource.createProduct(productModel));
@@ -213,7 +211,7 @@ void main() {
       test('should return unit when the call to deleteProduct is successful',
           () async {
         when(mockProductRemoteDatasource.deleteProduct(id))
-            .thenAnswer((_) async => null);
+            .thenAnswer((_) async {});
 
         final result = await productRepositoryImpl.deleteProduct(id);
         verify(mockProductRemoteDatasource.deleteProduct(id));
@@ -247,6 +245,7 @@ void main() {
       test('should return unit when the call to updateProduct is successful',
           () async {
         when(mockProductRemoteDatasource.updateProduct(productModel))
+            // ignore: avoid_returning_null_for_void
             .thenAnswer((_) async => null);
 
         final result = await productRepositoryImpl.updateProduct(productModel);

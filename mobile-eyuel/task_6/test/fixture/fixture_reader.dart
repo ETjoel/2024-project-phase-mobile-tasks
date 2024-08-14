@@ -1,3 +1,4 @@
 import 'dart:io';
 
-String fixture() => File('json_example.json').readAsStringSync();
+String fixture(String name) =>
+    File('test/fixture/$name.json').readAsStringSync();
