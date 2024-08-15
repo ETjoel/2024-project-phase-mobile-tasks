@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'features/ecommerce/presentation/pages/home_page.dart';
+import 'injection_container.dart';
 
-void main() {
+void main() async {
+  await init();
   runApp(const MyApp());
 }
 
