@@ -21,11 +21,11 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
   final DeleteProductUsecase deleteProductUsecase;
 
   ProductBloc(
-      this.viewAllProductsUseCase,
-      this.viewProductUseCase,
-      this.createProductUsecase,
-      this.updateProductUsecase,
-      this.deleteProductUsecase)
+      {required this.viewAllProductsUseCase,
+      required this.viewProductUseCase,
+      required this.createProductUsecase,
+      required this.updateProductUsecase,
+      required this.deleteProductUsecase})
       : super(AllProductsInitial()) {
     on<LoadAllProductsEvent>((event, emit) async {
       emit(AllProductsLoading());

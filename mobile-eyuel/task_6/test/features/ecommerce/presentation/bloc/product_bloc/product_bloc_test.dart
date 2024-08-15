@@ -39,11 +39,11 @@ void main() {
     mockUpdateProductUsecase = MockUpdateProductUsecase();
     mockDeleteProductUsecase = MockDeleteProductUsecase();
     productbloc = ProductBloc(
-        mockViewAllProductsUseCase,
-        mockViewProductUsecase,
-        mockCreateProductUsecase,
-        mockUpdateProductUsecase,
-        mockDeleteProductUsecase);
+        createProductUsecase: mockCreateProductUsecase,
+        deleteProductUsecase: mockDeleteProductUsecase,
+        updateProductUsecase: mockUpdateProductUsecase,
+        viewAllProductsUseCase: mockViewAllProductsUseCase,
+        viewProductUseCase: mockViewProductUsecase);
   });
 
   test('initial state should be AllProductsInitial', () {
