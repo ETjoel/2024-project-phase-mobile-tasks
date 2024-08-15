@@ -44,6 +44,9 @@ dependencies:
   rxdart: ^0.28.0
   internet_connection_checker: ^1.0.0+1
   shared_preferences: ^2.2.2
+  bloc_test: ^9.1.7
+  meta: ^1.9.1
+  bloc: ^8.1.4
   
 
 dev_dependencies:
