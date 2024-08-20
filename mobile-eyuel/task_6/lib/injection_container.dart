@@ -1,8 +1,10 @@
 import 'package:get_it/get_it.dart' as get_it;
 import 'package:http/http.dart' as http;
+import 'package:image_picker/image_picker.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'core/image_path/image_path.dart';
 import 'core/network/network_info.dart';
 import 'features/ecommerce/data/datasource/product_local_datasource.dart';
 import 'features/ecommerce/data/datasource/product_remote_datasource.dart';
@@ -48,10 +50,12 @@ Future<void> init() async {
 //core
   sl.registerLazySingleton<NetworkInfo>(
       () => NetworkInfoImpl(internetConnectionChecker: sl()));
+  sl.registerLazySingleton<ImagePath>(() => ImagePathImpl(imagePicker: sl()));
 
 //External
   final sharedPreferences = await SharedPreferences.getInstance();
   sl.registerLazySingleton(() => sharedPreferences);
   sl.registerLazySingleton(() => http.Client());
   sl.registerLazySingleton(() => InternetConnectionChecker());
+  sl.registerLazySingleton(() => ImagePicker());
 }

@@ -1,5 +1,20 @@
 import 'package:flutter/material.dart';
-import 'product_card.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get.dart';
+
+import '../../domain/entities/product.dart';
+import '../bloc/product_bloc/product_bloc.dart';
+import '../widgets/widget.dart';
+
+class SearchPageStateController extends GetxController {
+  final _currentRangeValues = const RangeValues(200, 500).obs;
+  final _showBottomSheet = false.obs;
+  RangeValues get currentRangeValues => _currentRangeValues.value;
+  set currentRangeValues(RangeValues value) =>
+      _currentRangeValues.value = value;
+  bool get showBottomSheet => _showBottomSheet.value;
+  set showBottomSheet(bool value) => _showBottomSheet.value = value;
+}
 
 class SearchProduct extends StatefulWidget {
   const SearchProduct({Key? key}) : super(key: key);
@@ -9,44 +24,17 @@ class SearchProduct extends StatefulWidget {
 }
 
 class _SearchProductState extends State<SearchProduct> {
-  bool showBottomSheet = false;
-
-  void _toggleBottomSheet() {
-    setState(() {
-      showBottomSheet = !showBottomSheet;
-    });
-
-    if (showBottomSheet) {
-      showModalBottomSheet(
-        context: context,
-        backgroundColor: Colors.white,
-        barrierColor: Colors.transparent,
-        shape: const RoundedRectangleBorder(),
-        isScrollControlled: true,
-        builder: (BuildContext context) {
-          return const BottomSheetComponent();
-        },
-      ).whenComplete(() {
-        // Reset the boolean when the bottom sheet is dismissed
-        setState(() {
-          showBottomSheet = false;
-        });
-      });
-    }
-  }
+  final SearchPageStateController searchPageStateController =
+      Get.put(SearchPageStateController());
+  bool filter = false;
+  TextEditingController nameController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        leading: IconButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          icon: const Icon(Icons.arrow_back_ios_new,
-              color: Color.fromRGBO(63, 81, 243, 1)),
-        ),
+        leading: const ArrowNewIosBackButton(),
         title: const Text('Search Product'),
       ),
       body: Column(
@@ -55,28 +43,63 @@ class _SearchProductState extends State<SearchProduct> {
             padding: const EdgeInsets.only(top: 8, left: 20, right: 20),
             child: searchNFilterComponent(),
           ),
-          Expanded(child: ListProduct()),
+          BlocBuilder<ProductBloc, ProductState>(builder: (context, state) {
+            if (state is AllProductsLoading) {
+              return const Center(
+                child: ListLoadingShimmer(),
+              );
+            } else if (state is AllProductsLoaded) {
+              return Expanded(
+                  child:
+                      ListProduct(products: filteredProduct(state.products)));
+            } else if (state is ProductError) {
+              return Center(
+                child: ErrorShow(message: state.message),
+              );
+            } else {
+              return const Center(
+                child: Text('No Products'),
+              );
+            }
+          }),
         ],
       ),
     );
   }
 
+  List<ProductEntity> filteredProduct(List<ProductEntity> _products) {
+    List<ProductEntity> products = _products;
+    if (filter && _products.isNotEmpty) {
+      final productsIndex = _products.map((product) {
+        if (product.price >=
+                searchPageStateController.currentRangeValues.start &&
+            product.price <= searchPageStateController.currentRangeValues.end &&
+            product.name.contains(nameController.text)) {
+          return true;
+        } else {
+          return false;
+        }
+      }).toList();
+      products = [];
+      for (var i = 0; i < productsIndex.length; i++) {
+        if (productsIndex[i]) {
+          products.add(_products[i]);
+        }
+      }
+    }
+    return products;
+  }
+
   Widget searchNFilterComponent() {
     return Row(
       children: [
-        Container(
-          alignment: Alignment.center,
-          width: 300,
-          height: 40,
-          child: TextField(
-            decoration: InputDecoration(
-              suffixIcon: const Icon(Icons.arrow_forward_sharp,
-                  color: Color.fromRGBO(63, 81, 243, 1)),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10),
-              ),
-            ),
-          ),
+        SearchTextField(
+          nameController: nameController,
+          onSubmitted: () {
+            setState(() {
+              filter = true;
+            });
+          },
         ),
         const Spacer(),
         TextButton(
@@ -97,111 +120,40 @@ class _SearchProductState extends State<SearchProduct> {
       ],
     );
   }
-}
 
-class BottomSheetComponent extends StatefulWidget {
-  const BottomSheetComponent({super.key});
+  void _toggleBottomSheet() {
+    setState(() {
+      searchPageStateController.showBottomSheet =
+          !searchPageStateController.showBottomSheet;
+    });
 
-  @override
-  State<BottomSheetComponent> createState() => _BottomSheetComponentState();
-}
-
-class _BottomSheetComponentState extends State<BottomSheetComponent> {
-  RangeValues _currentRangeValues = const RangeValues(100, 500);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(20),
-      height: 300,
-      color: Colors.white,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Text(
-            'Category',
-            style: TextStyle(fontWeight: FontWeight.w500),
-          ),
-          const SizedBox(height: 10),
-          catagoryTextField(),
-          const SizedBox(height: 10),
-          const Text('price', style: TextStyle(fontWeight: FontWeight.w500)),
-          const SizedBox(height: 10),
-          rangeWidget(),
-          const SizedBox(height: 10),
-          applyButton(),
-        ],
-      ),
-    );
-  }
-
-  RangeSlider rangeWidget() {
-    return RangeSlider(
-      values: _currentRangeValues,
-      activeColor: const Color.fromRGBO(63, 81, 243, 1),
-      inactiveColor: Colors.grey.shade300,
-      onChanged: (RangeValues value) {
+    if (searchPageStateController.showBottomSheet) {
+      _showModelBottomSheet().whenComplete(() {
         setState(() {
-          _currentRangeValues = value;
+          searchPageStateController.showBottomSheet = false;
         });
+      });
+    }
+  }
+
+  Future<dynamic> _showModelBottomSheet() {
+    return showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.white,
+      barrierColor: Colors.transparent,
+      shape: const RoundedRectangleBorder(),
+      isScrollControlled: true,
+      builder: (BuildContext context) {
+        return BottomSheetComponent(
+          searchPageStateController: searchPageStateController,
+          onPressed: () {
+            setState(() {
+              filter = true;
+            });
+            Navigator.pop(context);
+          },
+        );
       },
-      min: 0,
-      max: 1000,
-      labels: RangeLabels(
-        _currentRangeValues.start.round().toString(),
-        _currentRangeValues.end.round().toString(),
-      ),
     );
-  }
-
-  Container catagoryTextField() {
-    return Container(
-      height: 40,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-      ),
-      clipBehavior: Clip.hardEdge,
-      child: TextField(
-        decoration: InputDecoration(
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
-            borderSide: BorderSide(color: Colors.grey.shade300, width: 2),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget priceRange() {
-    return RangeSlider(
-      values: _currentRangeValues,
-      activeColor: const Color.fromRGBO(63, 81, 243, 1),
-      inactiveColor: Colors.grey.shade200,
-      onChanged: (RangeValues value) {
-        setState(() {
-          _currentRangeValues = value;
-        });
-      },
-      min: 0,
-      max: 1000,
-    );
-  }
-
-  TextButton applyButton() {
-    return TextButton(
-        onPressed: () {},
-        child: Container(
-          alignment: Alignment.center,
-          width: double.infinity,
-          height: 50,
-          decoration: BoxDecoration(
-            color: const Color.fromRGBO(63, 81, 243, 1),
-            borderRadius: BorderRadius.circular(10),
-          ),
-          child: const Text(
-            'Apply',
-            style: TextStyle(color: Colors.white, fontSize: 20),
-          ),
-        ));
   }
 }

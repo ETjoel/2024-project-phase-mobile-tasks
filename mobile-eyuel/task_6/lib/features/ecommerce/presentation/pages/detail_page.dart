@@ -1,218 +1,141 @@
 import 'package:flutter/material.dart';
-import 'product_model.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../data/models/product_model.dart';
+import '../../domain/entities/product.dart';
+import '../bloc/product_bloc/product_bloc.dart';
+import '../widgets/widget.dart';
 
 class DetailPage extends StatefulWidget {
   const DetailPage({super.key, required this.product});
-  final Product product;
+  final ProductEntity product;
 
   @override
   State<DetailPage> createState() => _DetailPageState();
 }
 
 class _DetailPageState extends State<DetailPage> {
-  late int selectedSize;
-
-  @override
-  void initState() {
-    super.initState();
-    selectedSize = widget.product.size;
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       floatingActionButtonLocation: FloatingActionButtonLocation.startTop,
       floatingActionButton: floatingActionButton(),
-      body: singleChildScrollView(),
-    );
-  }
+      body: BlocBuilder<ProductBloc, ProductState>(
+        builder: (context, state) {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            if (state is DeleteProductLoading) {
+              _showDialog(context);
+            } else if (state is DeleteProductLoaded) {
+              context.read<ProductBloc>().add(LoadAllProductsEvent());
+              Navigator.pop(context);
+              Navigator.pop(context, true);
 
-  SingleChildScrollView singleChildScrollView() {
-    return SingleChildScrollView(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          productImage(),
-          typeAndRating(),
-          nameAndprice(),
-          const Padding(
-            padding: EdgeInsets.only(
-              left: 20,
-              right: 20,
-              top: 10,
-            ),
-            child: Text(
-              'Size: ',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.normal,
-              ),
-            ),
-          ),
-          selectSize(),
-          Padding(
-            padding:
-                const EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 10),
-            child: Text(
-              widget.product.description,
-              style: const TextStyle(fontSize: 16.0),
-            ),
-          ),
-          deleteAndUpdate(),
-        ],
-      ),
-    );
-  }
-
-  Padding deleteAndUpdate() {
-    return Padding(
-      padding: const EdgeInsets.only(
-        left: 20,
-        right: 20,
-        top: 10,
-        bottom: 5,
-      ),
-      child: Row(
-        children: [
-          deleteProduct(),
-          const Spacer(),
-          updateProduct(),
-        ],
-      ),
-    );
-  }
-
-  TextButton updateProduct() {
-    return TextButton(
-        onPressed: () {},
-        child: Container(
-          alignment: Alignment.center,
-          width: 150,
-          height: 50,
-          decoration: BoxDecoration(
-            color: const Color.fromRGBO(63, 81, 243, 1),
-            borderRadius: BorderRadius.circular(10),
-          ),
-          child: const Text(
-            'Update',
-            style: TextStyle(
-                color: Color.fromARGB(255, 255, 255, 255), fontSize: 20),
-          ),
-        ));
-  }
-
-  TextButton deleteProduct() {
-    return TextButton(
-        onPressed: () {},
-        child: Container(
-          alignment: Alignment.center,
-          width: 150,
-          height: 50,
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              border: Border.all(width: 2, color: Colors.redAccent)),
-          child: const Text(
-            'Delete',
-            style: TextStyle(color: Colors.redAccent, fontSize: 20),
-          ),
-        ));
-  }
-
-  SizedBox selectSize() {
-    return SizedBox(
-      height: 100,
-      child: ListView.builder(
-        padding: const EdgeInsets.all(15),
-        itemCount: 10,
-        itemExtent: null,
-        scrollDirection: Axis.horizontal,
-        itemBuilder: (context, index) {
-          return SizedBox(
-            height: 60,
-            width: 60,
-            child: GestureDetector(
-              onTap: () {
-                setState(() {
-                  selectedSize = index + 38;
-                  debugPrint('$selectedSize');
-                });
-              },
-              child: Card(
-                elevation: 2,
-                surfaceTintColor: Colors.white,
-                color: selectedSize == index + 38 ? Colors.blue : Colors.white,
-                child: Container(
-                  alignment: Alignment.center,
-                  child: Text(
-                    '${index + 38}',
-                    style: const TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  behavior: SnackBarBehavior.floating,
+                  margin: EdgeInsets.all(20),
+                  backgroundColor: Colors.green,
+                  content: Text('Product added successfully'),
                 ),
-              ),
-            ),
-          );
+              );
+            } else if (state is UpdateProductLoading) {
+              _showDialog(context);
+            } else if (state is UpdateProductLoaded) {
+              Navigator.pop(context);
+            } else if (state is ProductError) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  behavior: SnackBarBehavior.floating,
+                  margin: const EdgeInsets.all(20),
+                  backgroundColor: Colors.red,
+                  content: Text(state.message),
+                ),
+              );
+            }
+          });
+
+          return singleChildScrollView(context);
         },
       ),
     );
   }
 
-  Padding nameAndprice() {
-    return Padding(
-      padding: const EdgeInsets.only(
-        left: 20,
-        right: 20,
-        top: 10,
-        bottom: 5,
-      ),
-      child: Row(
-        children: [
-          Text(
-            widget.product.name,
-            style: const TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
+  Future<dynamic> _showDialog(BuildContext context) {
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return const Center(
+            child: ThreeDotWaiting(size: 40),
+          );
+        });
+  }
+
+  Widget singleChildScrollView(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        CustomCachedNetworkImage(
+            product: widget.product,
+            height: MediaQuery.of(context).size.height / 3.4),
+        NameAndRatingListTile(product: widget.product),
+        const Padding(
+          padding: EdgeInsets.only(
+            left: 20,
+            right: 20,
+            top: 10,
+          ),
+          child: Text(
+            'Size: ',
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.normal,
             ),
           ),
-          const Spacer(),
-          Text('\$${widget.product.price}'),
-        ],
-      ),
-    );
-  }
-
-  Padding typeAndRating() {
-    return Padding(
-      padding: const EdgeInsets.only(
-        left: 20,
-        right: 20,
-        top: 10,
-        bottom: 5,
-      ),
-      child: Row(
-        children: [
-          Text(widget.product.category),
-          const Spacer(),
-          const Icon(Icons.star, color: Colors.yellow),
-          const Text('(4.0)'),
-        ],
-      ),
-    );
-  }
-
-  Widget productImage() {
-    return SizedBox(
-      height: 260,
-      width: double.infinity,
-      child: ClipRect(
-        child: FittedBox(
-          fit: BoxFit.cover,
-          child: Image.asset(widget.product.imageUrl),
         ),
-      ),
+        const SizeSelector(),
+        SingleChildScrollView(
+          padding:
+              const EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 10),
+          child: Text(
+            widget.product.description,
+            style: const TextStyle(fontSize: 16.0),
+          ),
+        ),
+        const Spacer(),
+        Padding(
+          padding: const EdgeInsets.only(
+            left: 20,
+            right: 20,
+            top: 10,
+            bottom: 5,
+          ),
+          child: Row(
+            children: [
+              DeleteButton(
+                  width: 150,
+                  onPressed: () {
+                    context
+                        .read<ProductBloc>()
+                        .add(DeleteProductEvent(widget.product.id));
+                  }),
+              const Spacer(),
+              AddButton(
+                name: 'Update',
+                width: 150,
+                onPressed: () {
+                  context.read<ProductBloc>().add(UpdateProductEvent(
+                      ProductModel(
+                          id: widget.product.id,
+                          name: widget.product.name,
+                          price: widget.product.price,
+                          description: widget.product.description,
+                          imageUrl: widget.product.imageUrl)));
+                },
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 

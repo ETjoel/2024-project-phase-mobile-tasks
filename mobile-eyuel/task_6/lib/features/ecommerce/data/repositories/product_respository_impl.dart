@@ -25,8 +25,8 @@ class ProductRepositoryImpl implements ProductRepository {
       try {
         final product = await productRemoteDatasource.getSingleProduct(id);
         return Right(product);
-      } on ServerException {
-        return const Left(ServerFailure(message: 'Server Error'));
+      } catch (e) {
+        return Left(ServerFailure(message: e.toString()));
       }
     } else {
       return const Left(ServerFailure(message: 'No internet connection'));
@@ -40,8 +40,8 @@ class ProductRepositoryImpl implements ProductRepository {
         final products = await productRemoteDatasource.getAllProducts();
         productLocalDataSource.cacheAllProducts(products);
         return Right(products);
-      } on ServerException {
-        return const Left(ServerFailure(message: 'Server Error'));
+      } catch (e) {
+        return Left(ServerFailure(message: e.toString()));
       }
     } else {
       try {
@@ -79,8 +79,8 @@ class ProductRepositoryImpl implements ProductRepository {
       try {
         await body();
         return const Right(unit);
-      } on ServerException {
-        return const Left(ServerFailure(message: 'Server Error'));
+      } catch (e) {
+        return Left(ServerFailure(message: e.toString()));
       }
     } else {
       return const Left(ServerFailure(message: 'No internet connection'));

@@ -46,6 +46,7 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
     on<UpdateProductEvent>((event, emit) async {
       emit(UpdateProductLoading());
       final result = await updateProductUsecase.call(event.product);
+      await Future.delayed(const Duration(seconds: 2));
       result.fold(
         (failure) => emit(ProductError(failure.message)),
         (unit) => emit(UpdateProductLoaded()),
@@ -55,6 +56,7 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
     on<DeleteProductEvent>((event, emit) async {
       emit(DeleteProductLoading());
       final result = await deleteProductUsecase.call(event.id);
+      await Future.delayed(const Duration(seconds: 2));
       result.fold(
         (failure) => emit(ProductError(failure.message)),
         (unit) => emit(DeleteProductLoaded()),
@@ -64,6 +66,7 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
     on<CreateProductEvent>((event, emit) async {
       emit(CreateProductLoading());
       final result = await createProductUsecase.call(event.productModel);
+      await Future.delayed(const Duration(seconds: 2));
       result.fold(
         (failure) => emit(ProductError(failure.message)),
         (unit) => emit(CreateProductLoaded()),

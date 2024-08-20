@@ -19,7 +19,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: '>=3.0.5 <4.0.0'
+  sdk: '>=3.0.0 <4.0.0'
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -41,12 +41,17 @@ dependencies:
   flutter_bloc: ^8.1.6
   get_it: ^7.6.7
   http: ^1.1.0
-  rxdart: ^0.28.0
+  rxdart: ^0.27.0
   internet_connection_checker: ^1.0.0+1
   shared_preferences: ^2.2.2
   bloc_test: ^9.1.7
   meta: ^1.9.1
   bloc: ^8.1.4
+  cached_network_image: ^3.1.0
+  image_picker: ^1.0.7
+  get: ^4.6.5
+  http_parser: ^4.0.2
+  shimmer: ^3.0.0
   
 
 dev_dependencies:

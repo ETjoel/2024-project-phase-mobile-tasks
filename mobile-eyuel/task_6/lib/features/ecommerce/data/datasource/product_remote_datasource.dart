@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:http_parser/http_parser.dart';
 
 import '../../../../core/errors/exceptions.dart';
 import '../../domain/entities/product.dart';
@@ -26,14 +27,15 @@ class ProductRemoteDataSourceImpl implements ProductRemoteDatasource {
   Future<void> createProduct(ProductEntity product) async {
     var request = http.MultipartRequest('POST', Uri.parse(baseUrl));
     request.fields.addAll({
-      'id': product.id,
+      // 'id': product.id,
       'name': product.name,
       'description': product.description,
       'price': product.price.toString(),
-      'imageUrl': product.imageUrl,
+      // 'imageUrl': product.imageUrl,
     });
-    request.files
-        .add(await http.MultipartFile.fromPath('image', product.imageUrl));
+    request.files.add(await http.MultipartFile.fromPath(
+        'image', product.imageUrl,
+        contentType: MediaType('image', 'jpg')));
 
     http.StreamedResponse response = await request.send();
 

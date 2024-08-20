@@ -16,3 +16,7 @@ class ServerFailure extends Failure {
 class CacheFailure extends Failure {
   const CacheFailure({required String message}) : super(message: message);
 }
+
+class ServiceFailure extends Failure {
+  const ServiceFailure({required String message}) : super(message: message);
+}

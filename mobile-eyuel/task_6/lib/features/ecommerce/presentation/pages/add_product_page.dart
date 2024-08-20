@@ -1,201 +1,149 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get.dart';
 
-class AddProductPage extends StatelessWidget {
+import '../../data/models/product_model.dart';
+import '../bloc/product_bloc/product_bloc.dart';
+import '../widgets/widget.dart';
+
+class ImagePickerController extends GetxController {
+  final imageUrl = ''.obs;
+
+  void onImageSelected(String path) {
+    imageUrl.value = path;
+  }
+}
+
+class AddProductPage extends StatefulWidget {
   const AddProductPage({super.key});
+
+  @override
+  State<AddProductPage> createState() => _AddProductPageState();
+}
+
+class _AddProductPageState extends State<AddProductPage> {
+  final imagePickerController = Get.put(ImagePickerController());
+  TextEditingController nameController = TextEditingController();
+  TextEditingController categoryController = TextEditingController();
+  TextEditingController priceController = TextEditingController();
+  TextEditingController descriptionController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        leading: IconButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            icon: const Icon(Icons.arrow_back_ios_new,
-                color: Color.fromRGBO(63, 81, 243, 1))),
+        leading: const ArrowNewIosBackButton(),
         title: const Text('Add Product'),
       ),
-      body: const SingleChildScrollView(
-        padding: EdgeInsets.all(20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            UploadImage(),
-            SizedBox(height: 10),
-            Text('name'),
-            SizedBox(height: 10),
-            CustomTextField(),
-            SizedBox(height: 10),
-            Text('category'),
-            SizedBox(height: 10),
-            CustomTextField(),
-            SizedBox(height: 10),
-            Text('price'),
-            SizedBox(height: 10),
-            CustomTextField(),
-            SizedBox(height: 10),
-            Text('description'),
-            SizedBox(height: 10),
-            DescriptionTextField(),
-            SizedBox(height: 10),
-            AddButton(),
-            SizedBox(height: 5),
-            DeleteButton(),
-          ],
-        ),
-      ),
-    );
-  }
-}
+      body: BlocBuilder<ProductBloc, ProductState>(
+        builder: (context, state) {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            if (state is CreateProductLoading) {
+              showDialog(
+                context: context,
+                builder: (context) {
+                  return const Center(
+                    child: Positioned(child: ThreeDotWaiting(size: 30)),
+                  );
+                },
+              );
+            } else if (state is CreateProductLoaded) {
+              context.read<ProductBloc>().add(LoadAllProductsEvent());
 
-class UploadImage extends StatelessWidget {
-  const UploadImage({
-    super.key,
-  });
+              Navigator.pop(context);
+              Navigator.pop(context, true);
 
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-        width: 366,
-        height: 200,
-        decoration: BoxDecoration(
-          color: Colors.grey.shade200,
-          borderRadius: BorderRadius.circular(10),
-        ),
-        child: const Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              Icons.add_a_photo,
-              size: 50,
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  behavior: SnackBarBehavior.floating,
+                  margin: EdgeInsets.all(20),
+                  backgroundColor: Colors.green,
+                  content: Text('Product added successfully'),
+                ),
+              );
+            } else if (state is ProductError) {
+              Navigator.pop(context, true);
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  behavior: SnackBarBehavior.floating,
+                  margin: const EdgeInsets.all(20),
+                  backgroundColor: Colors.red,
+                  content: Text(state.message),
+                ),
+              );
+            }
+          });
+          return SingleChildScrollView(
+            padding: const EdgeInsets.all(20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                ImagePickerWidget(imagePickerController: imagePickerController),
+                const SizedBox(height: 10),
+                const Text('name'),
+                const SizedBox(height: 10),
+                CustomTextField(nameController: nameController),
+                const SizedBox(height: 10),
+                const Text('category'),
+                const SizedBox(height: 10),
+                CustomTextField(
+                  nameController: categoryController,
+                ),
+                const SizedBox(height: 10),
+                const Text('price'),
+                const SizedBox(height: 10),
+                PriceTextField(
+                  priceController: priceController,
+                ),
+                const SizedBox(height: 10),
+                const Text('description'),
+                const SizedBox(height: 10),
+                DescriptionTextField(
+                  descriptionTextField: descriptionController,
+                ),
+                const SizedBox(height: 10),
+                AddButton(
+                  name: 'Add',
+                  onPressed: () {
+                    onPressed(context);
+                  },
+                ),
+                const SizedBox(height: 5),
+                DeleteButton(onPressed: () {
+                  setState(() {
+                    imagePickerController.onImageSelected('');
+                  });
+                }),
+              ],
             ),
-            SizedBox(
-              height: 5,
-            ),
-            Text('Upload Image'),
-          ],
-        ));
-  }
-}
-
-class CustomBackButton extends StatelessWidget {
-  const CustomBackButton({
-    super.key,
-    required this.context,
-  });
-
-  final BuildContext context;
-
-  @override
-  Widget build(BuildContext context) {
-    return BackButton(
-      style: ButtonStyle(
-        iconColor: MaterialStateColor.resolveWith(
-            (states) => const Color.fromRGBO(63, 81, 243, 1)),
-      ),
-      onPressed: () {
-        Navigator.pop(context);
-      },
-    );
-  }
-}
-
-class DescriptionTextField extends StatelessWidget {
-  const DescriptionTextField({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.grey.shade200,
-        borderRadius: BorderRadius.circular(10),
-      ),
-      clipBehavior: Clip.hardEdge,
-      child: TextField(
-        minLines: 5,
-        maxLines: 10,
-        decoration: InputDecoration(
-          fillColor: Colors.grey.shade200,
-          filled: true,
-          border: InputBorder.none,
-        ),
+          );
+        },
       ),
     );
   }
-}
 
-class CustomTextField extends StatelessWidget {
-  const CustomTextField({
-    super.key,
-  });
+  void onPressed(BuildContext context) {
+    if (nameController.text.isEmpty ||
+        descriptionController.text.isEmpty ||
+        priceController.text.isEmpty ||
+        imagePickerController.imageUrl.value.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        behavior: SnackBarBehavior.floating,
+        margin: EdgeInsets.all(20),
+        backgroundColor: Colors.red,
+        content: Text('Please fill all the fields'),
+      ));
+    } else {
+      final productModel = ProductModel(
+        id: '',
+        name: nameController.text,
+        description: descriptionController.text,
+        price: double.parse(priceController.text),
+        imageUrl: imagePickerController.imageUrl.value,
+      );
 
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.grey.shade200,
-        borderRadius: BorderRadius.circular(10),
-      ),
-      clipBehavior: Clip.hardEdge,
-      child: TextField(
-        decoration: InputDecoration(
-          fillColor: Colors.grey.shade200,
-          filled: true,
-          border: InputBorder.none,
-        ),
-      ),
-    );
-  }
-}
-
-class AddButton extends StatelessWidget {
-  const AddButton({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return TextButton(
-        onPressed: () {},
-        child: Container(
-          alignment: Alignment.center,
-          width: double.infinity,
-          height: 50,
-          decoration: BoxDecoration(
-            color: const Color.fromRGBO(63, 81, 243, 1),
-            borderRadius: BorderRadius.circular(10),
-          ),
-          child: const Text(
-            'Add',
-            style: TextStyle(color: Colors.white, fontSize: 20),
-          ),
-        ));
-  }
-}
-
-class DeleteButton extends StatelessWidget {
-  const DeleteButton({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return TextButton(
-        onPressed: () {},
-        child: Container(
-          alignment: Alignment.center,
-          width: double.infinity,
-          height: 50,
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              border: Border.all(width: 2, color: Colors.redAccent)),
-          child: const Text(
-            'Delete',
-            style: TextStyle(color: Colors.redAccent, fontSize: 20),
-          ),
-        ));
+      context.read<ProductBloc>().add(CreateProductEvent(productModel));
+    }
   }
 }
