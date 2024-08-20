@@ -14,7 +14,7 @@ class ErrorShow extends StatelessWidget {
         child: SingleChildScrollView(
             child: Text(
           message,
-          style: TextStyle(color: Colors.red),
+          style: const TextStyle(color: Colors.red),
         )),
       ),
     );

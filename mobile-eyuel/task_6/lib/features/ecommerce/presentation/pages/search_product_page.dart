@@ -67,10 +67,10 @@ class _SearchProductState extends State<SearchProduct> {
     );
   }
 
-  List<ProductEntity> filteredProduct(List<ProductEntity> _products) {
-    List<ProductEntity> products = _products;
-    if (filter && _products.isNotEmpty) {
-      final productsIndex = _products.map((product) {
+  List<ProductEntity> filteredProduct(List<ProductEntity> thisproducts) {
+    List<ProductEntity> products = thisproducts;
+    if (filter && thisproducts.isNotEmpty) {
+      final productsIndex = thisproducts.map((product) {
         if (product.price >=
                 searchPageStateController.currentRangeValues.start &&
             product.price <= searchPageStateController.currentRangeValues.end &&
@@ -83,7 +83,7 @@ class _SearchProductState extends State<SearchProduct> {
       products = [];
       for (var i = 0; i < productsIndex.length; i++) {
         if (productsIndex[i]) {
-          products.add(_products[i]);
+          products.add(thisproducts[i]);
         }
       }
     }
