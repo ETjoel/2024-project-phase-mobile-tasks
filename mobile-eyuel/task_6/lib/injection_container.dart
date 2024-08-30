@@ -46,7 +46,7 @@ Future<void> init() async {
       () => ProductLocalDataSourceImpl(sharedPreferences: sl()));
 
   sl.registerLazySingleton<ProductRemoteDatasource>(
-      () => ProductRemoteDataSourceImpl(client: sl()));
+      () => ProductRemoteDataSourceImpl(client: sl(), sharedPreferences: sl()));
 //core
   sl.registerLazySingleton<NetworkInfo>(
       () => NetworkInfoImpl(internetConnectionChecker: sl()));

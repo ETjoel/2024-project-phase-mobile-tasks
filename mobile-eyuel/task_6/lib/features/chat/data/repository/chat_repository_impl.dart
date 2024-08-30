@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../core/errors/failure.dart';
 import '../../../../core/network/network_info.dart';
@@ -12,12 +13,18 @@ class ChatRepositoryImpl implements ChatRepository {
   final ChatRemoteDataSource chatRemoteDataSource;
   final ChatLocalDataSource chatLocalDataSource;
   final NetworkInfo networkInfo;
+  final SharedPreferences sharedPreferences;
 
-  ChatRepositoryImpl(
-      this.chatRemoteDataSource, this.chatLocalDataSource, this.networkInfo);
+  ChatRepositoryImpl(this.chatRemoteDataSource, this.chatLocalDataSource,
+      this.networkInfo, this.sharedPreferences);
+
+  static const tTokenKey = 'access_token';
 
   @override
   Future<Either<Failure, Unit>> deleteChat(String chatId) async {
+    if (sharedPreferences.getString(tTokenKey) == null) {
+      return const Left(AuthFailure());
+    }
     if (await networkInfo.isConnected) {
       try {
         await chatRemoteDataSource.deleteChat(chatId);
@@ -33,6 +40,9 @@ class ChatRepositoryImpl implements ChatRepository {
   @override
   Future<Either<Failure, List<MessageEntity>>> getChatMessage(
       String userId) async {
+    if (sharedPreferences.getString(tTokenKey) == null) {
+      return const Left(AuthFailure());
+    }
     if (await networkInfo.isConnected) {
       try {
         final messages = await chatRemoteDataSource.getChatMessage(userId);
@@ -53,6 +63,9 @@ class ChatRepositoryImpl implements ChatRepository {
 
   @override
   Future<Either<Failure, ChatEntity>> initiateChat(String recicerId) async {
+    if (sharedPreferences.getString(tTokenKey) == null) {
+      return const Left(AuthFailure());
+    }
     if (await networkInfo.isConnected) {
       try {
         final chat = await chatRemoteDataSource.initiateChat(recicerId);
@@ -67,6 +80,9 @@ class ChatRepositoryImpl implements ChatRepository {
 
   @override
   Future<Either<Failure, ChatEntity>> viewMyChatById(String chatId) async {
+    if (sharedPreferences.getString(tTokenKey) == null) {
+      return const Left(AuthFailure());
+    }
     if (await networkInfo.isConnected) {
       try {
         final chat = await chatRemoteDataSource.getMyChatById(chatId);
@@ -81,6 +97,9 @@ class ChatRepositoryImpl implements ChatRepository {
 
   @override
   Future<Either<Failure, List<ChatEntity>>> viewMyChats() async {
+    if (sharedPreferences.getString(tTokenKey) == null) {
+      return const Left(AuthFailure());
+    }
     if (await networkInfo.isConnected) {
       try {
         final chats = await chatRemoteDataSource.getMyChats();
