@@ -43,6 +43,7 @@ class _DetailPageState extends State<DetailPage> {
             } else if (state is UpdateProductLoaded) {
               Navigator.pop(context);
             } else if (state is ProductError) {
+              Navigator.pop(context);
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   behavior: SnackBarBehavior.floating,

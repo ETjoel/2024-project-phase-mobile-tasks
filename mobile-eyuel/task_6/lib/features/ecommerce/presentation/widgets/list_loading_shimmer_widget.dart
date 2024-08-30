@@ -7,6 +7,7 @@ class ListLoadingShimmer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Shimmer.fromColors(
+        key: const Key('LIST_SHIMMER'),
         baseColor: Colors.grey.shade300,
         highlightColor: Colors.grey.shade100,
         enabled: true,
@@ -68,6 +69,7 @@ class ImageLoadingShimmer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Shimmer.fromColors(
+        key: const Key('IMAGE_SHIMMER'),
         baseColor: Colors.grey.shade300,
         highlightColor: Colors.grey.shade100,
         child: Container(

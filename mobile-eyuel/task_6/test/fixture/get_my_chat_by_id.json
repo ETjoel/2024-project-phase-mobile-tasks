@@ -1,0 +1,20 @@
+{
+    "statusCode": 200,
+    "message": "",
+    "data": {
+      "_id": "66c837f2b7068ee15142f66a",
+      "user1": {
+        "_id": "66c44fd86198f150e643c827",
+        "name": "0000andthenwhen",
+        "email": "mooooa@gmail.com",
+        "__v": 0
+      },
+      "user2": {
+        "_id": "66bde36e9bbe07fc39034cdd",
+        "name": "Mr. User",
+        "email": "user@gmail.com",
+        "__v": 0
+      },
+      "__v": 0
+    }
+  }

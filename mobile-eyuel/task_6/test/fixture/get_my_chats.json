@@ -1,0 +1,70 @@
+{
+  "statusCode": 200,
+  "message": "",
+  "data": [
+    {
+      "_id": "66c837f2b7068ee15142f66a",
+      "user1": {
+        "_id": "66c44fd86198f150e643c827",
+        "name": "0000andthenwhen",
+        "email": "mooooa@gmail.com",
+        "__v": 0
+      },
+      "user2": {
+        "_id": "66bde36e9bbe07fc39034cdd",
+        "name": "Mr. User",
+        "email": "user@gmail.com",
+        "__v": 0
+      },
+      "__v": 0
+    },
+    {
+      "_id": "66c83a67b7068ee15142f6c8",
+      "user1": {
+        "_id": "66c8386ab7068ee15142f684",
+        "name": "Mr.Robot",
+        "email": "robot@gmail.com",
+        "__v": 0
+      },
+      "user2": {
+        "_id": "66bde36e9bbe07fc39034cdd",
+        "name": "Mr. User",
+        "email": "user@gmail.com",
+        "__v": 0
+      },
+      "__v": 0
+    },
+    {
+      "_id": "66c84151b7068ee15142f817",
+      "user1": {
+        "_id": "66c840e4b7068ee15142f7ef",
+        "name": "string",
+        "email": "cat@gmail.com",
+        "__v": 0
+      },
+      "user2": {
+        "_id": "66bde36e9bbe07fc39034cdd",
+        "name": "Mr. User",
+        "email": "user@gmail.com",
+        "__v": 0
+      },
+      "__v": 0
+    },
+    {
+      "_id": "66c878b9346255dac2604c94",
+      "user1": {
+        "_id": "66c87875346255dac2604c7a",
+        "name": "SimonD",
+        "email": "simon123@gmail.com",
+        "__v": 0
+      },
+      "user2": {
+        "_id": "66bde36e9bbe07fc39034cdd",
+        "name": "Mr. User",
+        "email": "user@gmail.com",
+        "__v": 0
+      },
+      "__v": 0
+    }
+  ]
+}

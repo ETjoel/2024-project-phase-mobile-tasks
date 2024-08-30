@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 
 class ThreeDotWaiting extends StatefulWidget {
   final double size;
-  const ThreeDotWaiting({super.key, required this.size});
+  const ThreeDotWaiting({
+    Key? key,
+    required this.size,
+  }) : super(key: key ?? const Key('THREE_DOT_WAITING'));
 
   @override
   State<ThreeDotWaiting> createState() => _ThreeDotWaitingState();

@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'features/ecommerce/presentation/bloc/product_bloc/product_bloc.dart';
+import 'features/ecommerce/presentation/pages/chat_page.dart';
 import 'features/ecommerce/presentation/pages/home_page.dart';
 import 'injection_container.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await init();
-  runApp(const MyApp());
+  // WidgetsFlutterBinding.ensureInitialized();
+  // await init();
+  runApp(const ChatPage());
 }
 
 class MyApp extends StatelessWidget {

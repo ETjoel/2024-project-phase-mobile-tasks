@@ -7,6 +7,7 @@ class ErrorShow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
+      key: const Key('ERROR_SHOW'),
       padding: const EdgeInsets.all(15.0),
       child: SizedBox(
         height: 150,

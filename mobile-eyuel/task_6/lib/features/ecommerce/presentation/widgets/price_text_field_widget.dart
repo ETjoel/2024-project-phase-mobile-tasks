@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 
 class PriceTextField extends StatelessWidget {
   const PriceTextField({
-    super.key,
+    Key? key,
     required this.priceController,
-  });
+  }) : super(key: key);
 
   final TextEditingController priceController;
 

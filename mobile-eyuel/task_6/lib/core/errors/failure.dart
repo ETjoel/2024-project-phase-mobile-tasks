@@ -17,6 +17,10 @@ class CacheFailure extends Failure {
   const CacheFailure({required String message}) : super(message: message);
 }
 
+class AuthFailure extends Failure {
+  const AuthFailure() : super(message: 'Auth failure');
+}
+
 class ServiceFailure extends Failure {
   const ServiceFailure({required String message}) : super(message: message);
 }

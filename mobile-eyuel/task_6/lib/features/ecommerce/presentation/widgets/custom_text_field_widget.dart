@@ -4,9 +4,9 @@ class CustomTextField extends StatelessWidget {
   final TextEditingController nameController;
 
   const CustomTextField({
+    Key? key,
     required this.nameController,
-    super.key,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

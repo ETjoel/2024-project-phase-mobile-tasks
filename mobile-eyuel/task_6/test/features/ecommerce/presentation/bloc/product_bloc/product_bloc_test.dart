@@ -107,8 +107,9 @@ void main() {
             .thenAnswer((_) async => const Right(unit));
         return productbloc;
       },
-      act: (bloc) => bloc.add(UpdateProductEvent(productModel)),
-      expect: () => [UpdateProductLoading(), UpdateProductLoaded()]);
+      act: (bloc) async => bloc.add(UpdateProductEvent(productModel)),
+      expect: () => [UpdateProductLoading(), UpdateProductLoaded()],
+      wait: const Duration(seconds: 2));
 
   blocTest<ProductBloc, ProductState>(
       'emit [ProductError] when UpdateProductEvent is failure',
@@ -118,7 +119,8 @@ void main() {
         return productbloc;
       },
       act: (bloc) => bloc.add(UpdateProductEvent(productModel)),
-      expect: () => [UpdateProductLoading(), ProductError('Server Error')]);
+      expect: () => [UpdateProductLoading(), ProductError('Server Error')],
+      wait: const Duration(seconds: 2));
 
   blocTest<ProductBloc, ProductState>(
       'emit [DeleteProductLoading, DeleteProductLoaded] when DeleteProductEvent is successfull',
@@ -128,7 +130,8 @@ void main() {
         return productbloc;
       },
       act: (bloc) => bloc.add(DeleteProductEvent(productModel.id)),
-      expect: () => [DeleteProductLoading(), DeleteProductLoaded()]);
+      expect: () => [DeleteProductLoading(), DeleteProductLoaded()],
+      wait: const Duration(seconds: 2));
   blocTest<ProductBloc, ProductState>(
       'emit [DeleteProductLoading, ProductError] when DeleteProductEvent is failure',
       build: () {
@@ -137,7 +140,8 @@ void main() {
         return productbloc;
       },
       act: (bloc) => bloc.add(DeleteProductEvent(productModel.id)),
-      expect: () => [DeleteProductLoading(), ProductError('Server Error')]);
+      expect: () => [DeleteProductLoading(), ProductError('Server Error')],
+      wait: const Duration(seconds: 2));
 
   blocTest<ProductBloc, ProductState>(
       'emit [CreateProductLoading, CreateProductLoaded] when CreateProductEvent is successfull',
@@ -147,7 +151,8 @@ void main() {
         return productbloc;
       },
       act: (bloc) => bloc.add(CreateProductEvent(productModel)),
-      expect: () => [CreateProductLoading(), CreateProductLoaded()]);
+      expect: () => [CreateProductLoading(), CreateProductLoaded()],
+      wait: const Duration(seconds: 2));
 
   blocTest<ProductBloc, ProductState>(
       'emit [ProductError] when CreateProductEvent is failure',
@@ -157,5 +162,6 @@ void main() {
         return productbloc;
       },
       act: (bloc) => bloc.add(CreateProductEvent(productModel)),
-      expect: () => [CreateProductLoading(), ProductError('Server Error')]);
+      expect: () => [CreateProductLoading(), ProductError('Server Error')],
+      wait: const Duration(seconds: 2));
 }

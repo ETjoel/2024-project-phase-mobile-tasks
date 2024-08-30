@@ -5,8 +5,8 @@ class DescriptionTextField extends StatelessWidget {
 
   const DescriptionTextField({
     required this.descriptionTextField,
-    super.key,
-  });
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

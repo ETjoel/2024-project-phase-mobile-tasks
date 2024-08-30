@@ -22,13 +22,27 @@ class CustomCachedNetworkImage extends StatelessWidget {
       child: ClipRect(
         child: FittedBox(
           fit: BoxFit.cover,
-          child: CachedNetworkImage(
-            imageUrl: product.imageUrl,
-            placeholder: (context, url) => const ImageLoadingShimmer(),
-            errorWidget: (context, url, error) => const Icon(Icons.error),
-          ),
+          child: CachedNetworkImgeWithshimmerWaiter(imageUrl: product.imageUrl),
         ),
       ),
+    );
+  }
+}
+
+class CachedNetworkImgeWithshimmerWaiter extends StatelessWidget {
+  const CachedNetworkImgeWithshimmerWaiter({
+    super.key,
+    required this.imageUrl,
+  });
+
+  final String imageUrl;
+
+  @override
+  Widget build(BuildContext context) {
+    return CachedNetworkImage(
+      imageUrl: imageUrl,
+      placeholder: (context, url) => const ImageLoadingShimmer(),
+      errorWidget: (context, url, error) => const Icon(Icons.error),
     );
   }
 }

@@ -86,11 +86,11 @@ void main() {
           'should return failure when the call to getSingleProduct in remote data source  is failded',
           () async {
         when(mockProductRemoteDatasource.getSingleProduct(id))
-            .thenThrow(ServerException());
+            .thenThrow(Exception());
 
         final result = await productRepositoryImpl.getSingleProduct(id);
         verifyZeroInteractions(mockProductLocalDataSource);
-        expect(result, const Left(ServerFailure(message: 'Server Error')));
+        expect(result, Left(ServerFailure(message: Exception().toString())));
       });
     });
     runTestOffline(() {
@@ -136,14 +136,15 @@ void main() {
           'should return failure when the call to getAllproduct in remote data source  is failed',
           () async {
         when(mockProductRemoteDatasource.getAllProducts())
-            .thenThrow(ServerException()); // Remove the 'const' keyword
+            .thenThrow(Exception()); // Remove the 'const' keyword
 
         final result = await productRepositoryImpl.getAllProducts();
         verifyZeroInteractions(mockProductLocalDataSource);
         expect(
             result,
-            const Left(ServerFailure(
-                message: 'Server Error'))); // Remove the 'const' keyword
+            Left(ServerFailure(
+                message:
+                    Exception().toString()))); // Remove the 'const' keyword
       });
     });
     runTestOffline(() {
@@ -185,10 +186,10 @@ void main() {
       test('should return failure when the call to createProduct is failed',
           () async {
         when(mockProductRemoteDatasource.createProduct(productModel))
-            .thenThrow(ServerException());
+            .thenThrow(Exception());
 
         final result = await productRepositoryImpl.createProduct(productModel);
-        expect(result, const Left(ServerFailure(message: 'Server Error')));
+        expect(result, Left(ServerFailure(message: Exception().toString())));
       });
     });
 
@@ -221,10 +222,10 @@ void main() {
       test('should return failure when the call to deleteProduct is failed',
           () async {
         when(mockProductRemoteDatasource.deleteProduct(id))
-            .thenThrow(ServerException());
+            .thenThrow(Exception());
 
         final result = await productRepositoryImpl.deleteProduct(id);
-        expect(result, const Left(ServerFailure(message: 'Server Error')));
+        expect(result, Left(ServerFailure(message: Exception().toString())));
       });
     });
 
@@ -256,10 +257,10 @@ void main() {
       test('should return failure when the call to updateProduct is failed',
           () async {
         when(mockProductRemoteDatasource.updateProduct(productModel))
-            .thenThrow(ServerException());
+            .thenThrow(Exception());
 
         final result = await productRepositoryImpl.updateProduct(productModel);
-        expect(result, const Left(ServerFailure(message: 'Server Error')));
+        expect(result, Left(ServerFailure(message: Exception().toString())));
       });
     });
 

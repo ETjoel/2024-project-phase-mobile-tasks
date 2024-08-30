@@ -5,11 +5,11 @@ class AddButton extends StatelessWidget {
   final String name;
   final double width;
   const AddButton({
-    super.key,
+    Key? key,
     required this.onPressed,
     this.width = double.infinity,
     required this.name,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

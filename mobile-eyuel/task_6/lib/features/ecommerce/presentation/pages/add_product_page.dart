@@ -44,7 +44,7 @@ class _AddProductPageState extends State<AddProductPage> {
                 context: context,
                 builder: (context) {
                   return const Center(
-                    child: Positioned(child: ThreeDotWaiting(size: 30)),
+                    child: ThreeDotWaiting(size: 30),
                   );
                 },
               );
@@ -79,31 +79,38 @@ class _AddProductPageState extends State<AddProductPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                ImagePickerWidget(imagePickerController: imagePickerController),
+                // ImagePickerWidget(imagePickerController: imagePickerController),
                 const SizedBox(height: 10),
                 const Text('name'),
                 const SizedBox(height: 10),
-                CustomTextField(nameController: nameController),
+                CustomTextField(
+                  nameController: nameController,
+                  key: const Key('NAME_TEXTFIELD'),
+                ),
                 const SizedBox(height: 10),
                 const Text('category'),
                 const SizedBox(height: 10),
                 CustomTextField(
                   nameController: categoryController,
+                  key: const Key('CATAGORY_TEXTFIELD'),
                 ),
                 const SizedBox(height: 10),
                 const Text('price'),
                 const SizedBox(height: 10),
                 PriceTextField(
                   priceController: priceController,
+                  key: const Key('PRICE_TEXTFIELD'),
                 ),
                 const SizedBox(height: 10),
                 const Text('description'),
                 const SizedBox(height: 10),
                 DescriptionTextField(
                   descriptionTextField: descriptionController,
+                  key: const Key('DESCRIPTION_TEXTFIELD'),
                 ),
                 const SizedBox(height: 10),
                 AddButton(
+                  key: const Key('ADD_BUTTON'),
                   name: 'Add',
                   onPressed: () {
                     onPressed(context);
@@ -127,6 +134,7 @@ class _AddProductPageState extends State<AddProductPage> {
     if (nameController.text.isEmpty ||
         descriptionController.text.isEmpty ||
         priceController.text.isEmpty ||
+        !priceController.text.isNumericOnly ||
         imagePickerController.imageUrl.value.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
         behavior: SnackBarBehavior.floating,

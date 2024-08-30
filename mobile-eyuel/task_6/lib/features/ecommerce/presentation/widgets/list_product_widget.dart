@@ -8,14 +8,16 @@ import 'product_card_widget.dart';
 
 class ListProduct extends StatelessWidget {
   final List<ProductEntity> products;
+
   const ListProduct({
-    required this.products,
     super.key,
+    required this.products,
   });
 
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
+      key: const Key('LIST_PRODUCT'),
       padding: const EdgeInsets.all(15),
       itemCount: products.length,
       itemBuilder: (context, index) {
@@ -24,11 +26,6 @@ class ListProduct extends StatelessWidget {
           child: GestureDetector(
             onTap: () {
               Navigator.push(context, pageTransition(index));
-
-              // if (shouldReload != null && shouldReload) {
-              //   // ignore: use_build_context_synchronously
-              //   context.read<ProductBloc>().add(LoadAllProductsEvent());
-              // }
             },
             child: ProductCards(context: context, product: products[index]),
           ),
