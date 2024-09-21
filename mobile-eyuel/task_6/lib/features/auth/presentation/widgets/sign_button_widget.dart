@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../../../../core/constants.dart';
 
-class AddButton extends StatelessWidget {
+class SignButton extends StatelessWidget {
   final Function onPressed;
   final String name;
   final double width;
-  const AddButton({
+  const SignButton({
     Key? key,
     required this.onPressed,
     this.width = double.infinity,
@@ -29,7 +30,10 @@ class AddButton extends StatelessWidget {
           ),
           child: Text(
             name,
-            style: const TextStyle(color: Colors.white, fontSize: 20),
+            style: GoogleFonts.poppins(
+              color: Colors.white,
+              fontSize: 15,
+            ),
           ),
         ));
   }

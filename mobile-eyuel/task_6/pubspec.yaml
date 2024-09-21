@@ -52,6 +52,8 @@ dependencies:
   get: ^4.6.5
   http_parser: ^4.0.2
   shimmer: ^3.0.0
+  flutter_native_splash: ^2.3.7
+  google_fonts: 6.1.0
   
 
 dev_dependencies:
@@ -84,6 +86,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
       - images/lv_shoe.jpeg
+      - images/DMX holding a sign quoted 'Y'all gon' make me lose my mind' anime style cinematic.png
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 
