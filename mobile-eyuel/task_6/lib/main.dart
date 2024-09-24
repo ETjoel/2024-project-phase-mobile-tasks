@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'features/auth/presentation/pages/sign_in_page.dart';
 import 'features/auth/presentation/pages/sing_up_page.dart';
-import 'features/chat/presentation/pages/chat_page.dart';
+import 'features/chat/presentation/pages/chat_list_page.dart';
+import 'features/chat/presentation/pages/chatroom_page.dart';
 import 'features/ecommerce/presentation/bloc/product_bloc/product_bloc.dart';
 import 'features/ecommerce/presentation/pages/home_page.dart';
 import 'injection_container.dart';
@@ -10,7 +11,7 @@ import 'injection_container.dart';
 void main() async {
   // WidgetsFlutterBinding.ensureInitialized();
   // await init();
-  runApp(const DemoChatPage());
+  runApp(const DemoChatListPage());
 }
 
 class MyApp extends StatelessWidget {
