@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 
 import '../../../../core/constants.dart';
+import '../widgets/chat_user_widget.dart';
 
 class DemoChatListPage extends StatelessWidget {
   const DemoChatListPage({super.key});
@@ -92,7 +93,7 @@ class _ChatListPageState extends State<ChatListPage> {
                         child: ListView.builder(
                             itemCount: 40,
                             itemBuilder: (context, index) {
-                              return Text('Chat $index');
+                              return ChatUser();
                             }))
                   ]),
                 ),
