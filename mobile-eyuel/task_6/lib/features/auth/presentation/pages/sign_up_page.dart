@@ -4,24 +4,6 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../../../core/constants.dart';
 import '../widgets/widgets.dart';
 
-class DemoSignUpPage extends StatelessWidget {
-  const DemoSignUpPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.white),
-          canvasColor: Colors.white,
-          useMaterial3: true,
-          primaryColor: primaryColor,
-          secondaryHeaderColor: Colors.white),
-      debugShowCheckedModeBanner: false,
-      home: SignUpPage(),
-    );
-  }
-}
-
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
 
@@ -138,7 +120,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   )
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 5,
               ),
               SignButton(onPressed: () {}, name: 'SIGN IN'),

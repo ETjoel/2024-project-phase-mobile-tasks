@@ -22,22 +22,15 @@ void main() {
     mockAuthLocalDataSource = MockAuthLocalDataSource();
     mockNetworkInfo = MockNetworkInfo();
     authRepositoryImpl = AuthRepositoryImpl(
-        mockAuthRemoteDataSource, mockAuthLocalDataSource, mockNetworkInfo);
+        authRemoteDataSource: mockAuthRemoteDataSource,
+        authLocalDataSource: mockAuthLocalDataSource,
+        networkInfo: mockNetworkInfo);
   });
 
   void runTestOnline(Function body) {
     group('online', () {
       setUp(() {
         when(mockNetworkInfo.isConnected).thenAnswer((_) async => true);
-      });
-      body();
-    });
-  }
-
-  void runTestOffline(Function body) {
-    group('offline', () {
-      setUp(() {
-        when(mockNetworkInfo.isConnected).thenAnswer((_) async => false);
       });
       body();
     });

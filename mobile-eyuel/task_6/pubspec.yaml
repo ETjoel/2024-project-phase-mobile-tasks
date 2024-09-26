@@ -54,6 +54,7 @@ dependencies:
   shimmer: ^3.0.0
   flutter_native_splash: ^2.3.7
   google_fonts: 6.1.0
+  go_router: ^13.1.0
   
 
 dev_dependencies:

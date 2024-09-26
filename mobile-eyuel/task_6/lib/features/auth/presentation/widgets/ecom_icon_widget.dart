@@ -11,7 +11,7 @@ class EcomIconWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       shape: RoundedRectangleBorder(
-        side: BorderSide(color: primaryColor),
+        side: const BorderSide(color: primaryColor),
         borderRadius: BorderRadius.circular(height * 0.2),
       ),
       elevation: 5,

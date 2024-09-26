@@ -3,7 +3,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:task_6/core/errors/failure.dart';
 import 'package:task_6/features/auth/data/model/user_model.dart';
-import 'package:task_6/features/auth/domain/entities/user.dart';
 import 'package:task_6/features/chat/data/models/chat_model.dart';
 import 'package:task_6/features/chat/data/models/message_model.dart';
 import 'package:task_6/features/chat/data/repository/chat_repository_impl.dart';

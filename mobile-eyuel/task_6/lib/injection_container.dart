@@ -6,6 +6,15 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'core/image_path/image_path.dart';
 import 'core/network/network_info.dart';
+import 'features/auth/data/datasource/auth_local.dart';
+import 'features/auth/data/datasource/auth_remote.dart';
+import 'features/auth/data/repository/auth_repository_impl.dart';
+import 'features/auth/domain/repository/auth_respository.dart';
+import 'features/auth/domain/usecases/get_user_usecase.dart';
+import 'features/auth/domain/usecases/login_usecase.dart';
+import 'features/auth/domain/usecases/logout_usecase.dart';
+import 'features/auth/domain/usecases/register_usecase.dart';
+import 'features/auth/presentation/bloc/auth_bloc.dart';
 import 'features/ecommerce/data/datasource/product_local_datasource.dart';
 import 'features/ecommerce/data/datasource/product_remote_datasource.dart';
 import 'features/ecommerce/data/repositories/product_respository_impl.dart';
@@ -28,17 +37,32 @@ Future<void> init() async {
       updateProductUsecase: sl(),
       deleteProductUsecase: sl()));
 
+  sl.registerFactory(() => AuthBloc(
+      loginUseCase: sl(),
+      getUserUseCase: sl(),
+      registerUserCase: sl(),
+      logoutUseCase: sl()));
+
 //usecases
   sl.registerLazySingleton(() => ViewAllProductsUseCase(sl()));
   sl.registerLazySingleton(() => ViewProductUsecase(sl()));
   sl.registerLazySingleton(() => CreateProductUsecase(sl()));
   sl.registerLazySingleton(() => UpdateProductUsecase(sl()));
   sl.registerLazySingleton(() => DeleteProductUsecase(sl()));
+  sl.registerLazySingleton(() => LoginUseCase(sl()));
+  sl.registerLazySingleton(() => GetUserUseCase(sl()));
+  sl.registerLazySingleton(() => RegisterUserCase(sl()));
+  sl.registerLazySingleton(() => LogoutUseCase(sl()));
 
 //repositories
   sl.registerLazySingleton<ProductRepository>(() => ProductRepositoryImpl(
       productLocalDataSource: sl(),
       productRemoteDatasource: sl(),
+      networkInfo: sl()));
+
+  sl.registerLazySingleton<AuthRepository>(() => AuthRepositoryImpl(
+      authRemoteDataSource: sl(),
+      authLocalDataSource: sl(),
       networkInfo: sl()));
 
 //datasources
@@ -47,6 +71,12 @@ Future<void> init() async {
 
   sl.registerLazySingleton<ProductRemoteDatasource>(
       () => ProductRemoteDataSourceImpl(client: sl(), sharedPreferences: sl()));
+
+  sl.registerLazySingleton<AuthRemoteDataSource>(
+      () => AuthRemoteDataSourceImpl(sl(), sl()));
+
+  sl.registerLazySingleton<AuthLocalDataSource>(
+      () => AuthLocalDataSourceImp(sl()));
 //core
   sl.registerLazySingleton<NetworkInfo>(
       () => NetworkInfoImpl(internetConnectionChecker: sl()));

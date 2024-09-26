@@ -45,7 +45,6 @@ void main() {
     })).thenAnswer((_) async => http.Response('', 200));
     when(mockSharedPreferences.getString('access_token'))
         .thenAnswer((_) => 'some_token');
-    final result = await chatRemoteDataSourceImpl.deleteChat('userId');
     verify(mockClient.delete(Uri.parse('$baseUrl/userId'), headers: {
       'Authorization': 'some_token',
       'Content-Type': 'application/json'

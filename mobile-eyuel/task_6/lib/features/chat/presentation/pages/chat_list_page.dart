@@ -17,7 +17,7 @@ class DemoChatListPage extends StatelessWidget {
           canvasColor: Colors.white,
           useMaterial3: true,
         ),
-        home: ChatListPage());
+        home: const ChatListPage());
   }
 }
 
@@ -45,7 +45,7 @@ class _ChatListPageState extends State<ChatListPage> {
                 height: size.height,
                 width: size.width,
                 color: primaryColor,
-                child: Container(child: Icon(Icons.search, size: 30))),
+                child: const Icon(Icons.search, size: 30)),
             Positioned(
               top: _dragOffset,
               left: 0,
@@ -88,12 +88,12 @@ class _ChatListPageState extends State<ChatListPage> {
                   child: Column(children: [
                     Container(
                         height: 5, width: 40, color: Colors.grey.shade200),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                     Expanded(
                         child: ListView.builder(
                             itemCount: 40,
                             itemBuilder: (context, index) {
-                              return ChatUser();
+                              return const ChatUser();
                             }))
                   ]),
                 ),

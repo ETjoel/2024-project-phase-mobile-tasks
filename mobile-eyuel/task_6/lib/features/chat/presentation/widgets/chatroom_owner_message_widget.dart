@@ -39,7 +39,7 @@ class ChatroomOwner extends StatelessWidget {
               message,
               style: const TextStyle(color: Colors.white),
             )),
-        Container(
+        SizedBox(
           width: MediaQuery.of(context).size.width / 1.5,
           child: Text(time,
               style: TextStyle(color: Colors.grey.shade600, fontSize: 10)),

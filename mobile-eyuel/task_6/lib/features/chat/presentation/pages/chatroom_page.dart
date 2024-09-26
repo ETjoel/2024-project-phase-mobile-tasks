@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/constants.dart';
-import '../../../ecommerce/presentation/widgets/widget.dart';
 import '../widgets/widgets.dart';
 
 class DemoChatPage extends StatelessWidget {
@@ -16,7 +15,7 @@ class DemoChatPage extends StatelessWidget {
           canvasColor: Colors.white,
           useMaterial3: true,
         ),
-        home: ChatPage());
+        home: const ChatPage());
   }
 }
 

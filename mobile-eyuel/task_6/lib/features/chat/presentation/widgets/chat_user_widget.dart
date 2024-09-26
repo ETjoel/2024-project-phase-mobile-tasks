@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../core/constants.dart';
 import 'widgets.dart';
 
 class ChatUser extends StatefulWidget {
@@ -20,7 +21,7 @@ class _ChatUserState extends State<ChatUser> {
           top: size.height * 0.02),
       child: Row(
         children: [
-          Badge(
+          const Badge(
             alignment: Alignment(0.75, 0.9),
             // label: Text('2'),
             backgroundColor: Colors.green,
@@ -29,15 +30,15 @@ class _ChatUserState extends State<ChatUser> {
               imageUrl: 'imageUrl',
             ),
           ),
-          SizedBox(width: 5),
+          const SizedBox(width: 5),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(
                 width: size.width * 0.5,
-                child: Text('name',
+                child: const Text('name',
                     overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(
+                    style: TextStyle(
                         fontFamily: 'Sora',
                         fontSize: 20,
                         fontWeight: FontWeight.bold)),
@@ -56,10 +57,11 @@ class _ChatUserState extends State<ChatUser> {
               )
             ],
           ),
-          Spacer(),
+          const Spacer(),
           Badge(
             alignment: Alignment.bottomRight,
-            backgroundColor: Colors.purple,
+            backgroundColor: primaryColor,
+            label: const Text('2'),
             child: Column(
               children: [
                 Text('2:49 PM',
@@ -71,7 +73,6 @@ class _ChatUserState extends State<ChatUser> {
                 const SizedBox(height: 30),
               ],
             ),
-            label: Text('2'),
           ),
         ],
       ),

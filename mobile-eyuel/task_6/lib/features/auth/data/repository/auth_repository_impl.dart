@@ -13,7 +13,9 @@ class AuthRepositoryImpl implements AuthRepository {
   final NetworkInfo networkInfo;
 
   AuthRepositoryImpl(
-      this.authRemoteDataSource, this.authLocalDataSource, this.networkInfo);
+      {required this.authRemoteDataSource,
+      required this.authLocalDataSource,
+      required this.networkInfo});
   @override
   Future<Either<Failure, Unit>> loginUser(String email, String password) async {
     if (await networkInfo.isConnected) {
