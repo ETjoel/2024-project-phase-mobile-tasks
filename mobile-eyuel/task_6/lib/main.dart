@@ -34,11 +34,15 @@ class MyApp extends StatelessWidget {
             useMaterial3: true,
           ),
           routes: {
-            '/home': (context) => const HomePage(),
+            '/home': (context) => BlocProvider(
+                  create: (context) =>
+                      sl<ProductBloc>()..add(LoadAllProductsEvent()),
+                  child: const HomePage(),
+                ),
             '/chatlist': (context) => const ChatListPage(),
             '/chatroom': (context) => const ChatListPage(),
             '/signin': (context) => SignInPage(),
-            '/signup': (context) => const SignUpPage(),
+            '/signup': (context) => SignUpPage(),
           },
           home: BlocBuilder<AuthBloc, AuthState>(
             builder: (context, state) {

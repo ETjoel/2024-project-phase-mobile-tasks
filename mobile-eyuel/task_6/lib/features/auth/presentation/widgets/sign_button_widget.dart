@@ -8,13 +8,13 @@ import '../bloc/auth_bloc.dart';
 
 class SignButton extends StatelessWidget {
   final Function onPressed;
-  final String name;
+  final bool isSignIn;
   final double width;
   const SignButton({
     Key? key,
     required this.onPressed,
     this.width = double.infinity,
-    required this.name,
+    required this.isSignIn,
   }) : super(key: key);
 
   @override
@@ -33,16 +33,30 @@ class SignButton extends StatelessWidget {
           ),
           child: BlocBuilder<AuthBloc, AuthState>(
             builder: (context, state) {
-              if (state is AuthSignInLoading) {
-                return const ThreeDotWaiting(size: 15);
+              if (isSignIn) {
+                if (state is AuthSignInLoading) {
+                  return const ThreeDotWaiting(size: 15);
+                } else {
+                  return Text(
+                    'SIGN IN',
+                    style: GoogleFonts.poppins(
+                      color: Colors.white,
+                      fontSize: 15,
+                    ),
+                  );
+                }
               } else {
-                return Text(
-                  name,
-                  style: GoogleFonts.poppins(
-                    color: Colors.white,
-                    fontSize: 15,
-                  ),
-                );
+                if (state is AuthSignUpLoading) {
+                  return const ThreeDotWaiting(size: 15);
+                } else {
+                  return Text(
+                    'SIGN UP',
+                    style: GoogleFonts.poppins(
+                      color: Colors.white,
+                      fontSize: 15,
+                    ),
+                  );
+                }
               }
             },
           ),

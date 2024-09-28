@@ -5,12 +5,14 @@ class CustomTextField extends StatelessWidget {
   final TextInputType keyboardType;
   final bool obscureText;
   final String hintText;
+  final Function(String value)? onsubmit;
   const CustomTextField({
     super.key,
     required this.controller,
     this.keyboardType = TextInputType.text,
     this.obscureText = false,
     this.hintText = '',
+    this.onsubmit,
   });
 
   @override
@@ -21,6 +23,7 @@ class CustomTextField extends StatelessWidget {
         decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
         clipBehavior: Clip.hardEdge,
         child: TextField(
+          onSubmitted: (value) => onsubmit != null ? onsubmit!(value) : {},
           controller: controller,
           keyboardType: keyboardType,
           obscureText: obscureText,

@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../../../core/constants.dart';
 import '../../../ecommerce/presentation/controller.dart';
-import '../../../ecommerce/presentation/widgets/widget.dart';
 import '../bloc/auth_bloc.dart';
 import '../widgets/widgets.dart' as auth_widgets;
 
@@ -26,6 +24,8 @@ class SignInPage extends StatelessWidget {
         listener: (context, state) {
           if (state is AuthSignInSuccess) {
             context.read<AuthBloc>().add(AuthGetUserEvent());
+            debugPrint('User signed in');
+            Navigator.pushReplacementNamed(context, '/home');
           } else if (state is AuthFailure) {
             ScaffoldMessenger.of(context)
                 .showSnackBar(SnackBar(content: Text(state.failure.message)));
@@ -85,8 +85,23 @@ class SignInPage extends StatelessWidget {
               obscureText: true,
               hintText: '********',
             ),
+            const SizedBox(
+              height: 5,
+            ),
+            Obx(() {
+              if (authController.showInputError.value) {
+                return const Text(
+                  'Please fill all the fields',
+                  style: TextStyle(color: Colors.red),
+                );
+              } else {
+                return const SizedBox(
+                  height: 10,
+                );
+              }
+            }),
             SizedBox(
-              height: size.height * 0.09,
+              height: size.height * 0.08,
             ),
             auth_widgets.SignButton(
                 onPressed: () {
@@ -94,9 +109,11 @@ class SignInPage extends StatelessWidget {
                       passwordController.text != '') {
                     context.read<AuthBloc>().add(AuthSignInEvent(
                         emailController.text, passwordController.text));
+                  } else {
+                    authController.toggleInputError();
                   }
                 },
-                name: 'SIGN IN'),
+                isSignIn: true),
             SizedBox(
               height: size.height * 0.1,
             ),
@@ -105,7 +122,9 @@ class SignInPage extends StatelessWidget {
               children: [
                 const Text('Don\'t have an account?'),
                 GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.pushNamed(context, '/signup');
+                    },
                     child: const Text('SIGN UP',
                         style: TextStyle(color: primaryColor))),
               ],

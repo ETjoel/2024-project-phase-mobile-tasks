@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -18,7 +19,6 @@ class AuthRemoteDataSourceImpl extends AuthRemoteDataSource {
   static const tTokenKey = 'access_token';
   static const baseUrl =
       'https://g5-flutter-learning-path-be.onrender.com/api/v3';
-
   AuthRemoteDataSourceImpl(this.client, this.sharedPreferences);
   @override
   Future<UserModel> getUser() async {
@@ -61,6 +61,8 @@ class AuthRemoteDataSourceImpl extends AuthRemoteDataSource {
     if (response.statusCode == 200 || response.statusCode == 201) {
       return;
     } else {
+      debugPrint(
+          '${response.statusCode}, ${response.body}, $name, $email, $password');
       throw Exception('Failed to register');
     }
   }
