@@ -20,7 +20,7 @@ class ProductCards extends StatelessWidget {
         borderRadius: BorderRadius.circular(10),
       ),
       child: SizedBox(
-        height: 250,
+        height: MediaQuery.of(context).size.height / 2.8,
         child: Column(
           children: [
             ClipRRect(

@@ -26,7 +26,7 @@ class AuthRemoteDataSourceImpl extends AuthRemoteDataSource {
     if (accessToken != null) {
       final response = await client.get(Uri.parse('$baseUrl/users/me'),
           headers: {
-            'Authorization': accessToken,
+            'Authorization': 'Bearer $accessToken',
             'Content-Type': 'application/json'
           });
       if (response.statusCode == 200) {

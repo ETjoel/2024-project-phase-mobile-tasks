@@ -5,8 +5,10 @@ import 'features/auth/presentation/bloc/auth_bloc.dart';
 import 'features/auth/presentation/pages/sign_in_page.dart';
 import 'features/auth/presentation/pages/sign_up_page.dart';
 import 'features/chat/presentation/pages/chat_list_page.dart';
+import 'features/chat/presentation/pages/chatroom_page.dart';
 import 'features/ecommerce/presentation/bloc/product_bloc/product_bloc.dart';
 import 'features/ecommerce/presentation/pages/home_page.dart';
+import 'features/ecommerce/presentation/widgets/three_dot_waiting_widget.dart';
 import 'injection_container.dart';
 
 void main() async {
@@ -23,7 +25,10 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
         providers: [
           BlocProvider(
-              create: (context) => sl<AuthBloc>()..add(AuthGetUserEvent()))
+              create: (context) => sl<AuthBloc>()..add(AuthGetUserEvent())),
+          BlocProvider(
+            create: (context) => sl<ProductBloc>(),
+          )
         ],
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
@@ -34,13 +39,14 @@ class MyApp extends StatelessWidget {
             useMaterial3: true,
           ),
           routes: {
-            '/home': (context) => BlocProvider(
-                  create: (context) =>
-                      sl<ProductBloc>()..add(LoadAllProductsEvent()),
-                  child: const HomePage(),
-                ),
-            '/chatlist': (context) => const ChatListPage(),
-            '/chatroom': (context) => const ChatListPage(),
+            '/home': (context) {
+              context.read<ProductBloc>().add(LoadAllProductsEvent());
+              return const HomePage();
+            },
+            '/chatlist': (context) {
+              return const ChatListPage();
+            },
+            '/chatroom': (context) => const ChatPage(),
             '/signin': (context) => SignInPage(),
             '/signup': (context) => SignUpPage(),
           },
@@ -49,9 +55,7 @@ class MyApp extends StatelessWidget {
               if (state is AuthGetUserLoading) {
                 return const Scaffold(
                   body: Center(
-                    child: CircularProgressIndicator(
-                      value: 100,
-                    ),
+                    child: ThreeDotWaiting(size: 20),
                   ),
                 );
               } else if (state is AuthGetUserSuccess) {

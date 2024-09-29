@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../../core/constants.dart';
+import '../../../auth/presentation/bloc/auth_bloc.dart';
 import '../bloc/product_bloc/product_bloc.dart';
 import '../widgets/widget.dart';
 import 'add_product_page.dart';
@@ -18,15 +20,50 @@ class _HomePageState extends State<HomePage> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         title: const UserInfo(),
-        actions: const [NotificationButton()],
+        actions: const [LogoutButton()],
       ),
-      floatingActionButton: floatingButton(context),
-      body: const Column(
+      floatingActionButton: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          SearchComponent(),
-          ListBuilderBloc(),
+          floatingChatButton(),
+          const SizedBox(height: 10),
+          floatingButton(context),
         ],
       ),
+      body: BlocListener<AuthBloc, AuthState>(
+        listener: (context, state) {
+          if (state is AuthSignOutLoading) {
+            showDialog(
+                context: context,
+                builder: (context) {
+                  return const Center(
+                    child: ThreeDotWaiting(size: 20),
+                  );
+                });
+          } else if (state is AuthSignOutSuccess) {
+            Navigator.pushNamedAndRemoveUntil(
+                context, '/signin', (Route<dynamic> route) => false);
+          }
+        },
+        child: const Column(
+          children: [
+            SearchComponent(),
+            ListBuilderBloc(),
+          ],
+        ),
+      ),
+    );
+  }
+
+  FloatingActionButton floatingChatButton() {
+    return FloatingActionButton(
+      shape: const CircleBorder(),
+      backgroundColor: primaryColor,
+      heroTag: 'chat',
+      onPressed: () {
+        Navigator.pushNamed(context, '/chatlist');
+      },
+      child: const Icon(Icons.chat, color: Colors.white),
     );
   }
 
@@ -34,6 +71,7 @@ class _HomePageState extends State<HomePage> {
     return FloatingActionButton(
       shape: const CircleBorder(),
       backgroundColor: const Color.fromRGBO(63, 81, 243, 1),
+      heroTag: 'add',
       onPressed: () {
         Navigator.push(
           context,

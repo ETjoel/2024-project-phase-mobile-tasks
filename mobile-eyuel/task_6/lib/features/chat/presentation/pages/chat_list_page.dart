@@ -86,8 +86,29 @@ class _ChatListPageState extends State<ChatListPage> {
                           topRight: Radius.circular(
                               min(_dragOffset * 0.7, size.height * 0.05)))),
                   child: Column(children: [
-                    Container(
-                        height: 5, width: 40, color: Colors.grey.shade200),
+                    SizedBox(
+                      height: 20,
+                      child: Row(
+                        children: [
+                          IconButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              icon: const Icon(
+                                Icons.arrow_back_ios_new,
+                                size: 15,
+                                color: primaryColor,
+                              )),
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width / 3,
+                          ),
+                          Container(
+                              height: 5,
+                              width: 40,
+                              color: Colors.grey.shade200),
+                        ],
+                      ),
+                    ),
                     const SizedBox(height: 20),
                     Expanded(
                         child: ListView.builder(

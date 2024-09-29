@@ -36,8 +36,8 @@ class ProductRemoteDataSourceImpl implements ProductRemoteDatasource {
       throw const AuthFailure();
     }
     var request = http.MultipartRequest('POST', Uri.parse(baseUrl));
-    request.headers
-        .addAll({'Authorization': token, 'Content-Type': 'application/json'});
+    request.headers.addAll(
+        {'Authorization': 'Bearer $token', 'Content-Type': 'application/json'});
     request.fields.addAll({
       'name': product.name,
       'description': product.description,
@@ -62,8 +62,10 @@ class ProductRemoteDataSourceImpl implements ProductRemoteDatasource {
     if (token == null) {
       throw const AuthFailure();
     }
-    final response = await client.delete(Uri.parse('$baseUrl/$id'),
-        headers: {'Authorization': token, 'Content-Type': 'application/json'});
+    final response = await client.delete(Uri.parse('$baseUrl/$id'), headers: {
+      'Authorization': 'Bearer $token',
+      'Content-Type': 'application/json'
+    });
 
     if (response.statusCode == 200) {
       return;
@@ -80,7 +82,10 @@ class ProductRemoteDataSourceImpl implements ProductRemoteDatasource {
     }
     final response = await client.get(
       Uri.parse(baseUrl),
-      headers: {'Authorization': token, 'Content-Type': 'application/json'},
+      headers: {
+        'Authorization': 'Bearer $token',
+        'Content-Type': 'application/json'
+      },
     );
 
     if (response.statusCode == 200) {
@@ -101,7 +106,10 @@ class ProductRemoteDataSourceImpl implements ProductRemoteDatasource {
     }
     final response = await client.get(
       Uri.parse('$baseUrl/$id'),
-      headers: {'Authorization': token, 'Content-Type': 'application/json'},
+      headers: {
+        'Authorization': 'Bearer $token',
+        'Content-Type': 'application/json'
+      },
     );
 
     if (response.statusCode == 200) {
@@ -118,7 +126,10 @@ class ProductRemoteDataSourceImpl implements ProductRemoteDatasource {
       throw const AuthFailure();
     }
     final response = await client.put(Uri.parse('$baseUrl/${product.id}'),
-        headers: {'Authorization': token, 'Content-Type': 'application/json'},
+        headers: {
+          'Authorization': 'Bearer $token',
+          'Content-Type': 'application/json'
+        },
         body: jsonEncode(product.tojson()));
 
     if (response.statusCode == 200) {

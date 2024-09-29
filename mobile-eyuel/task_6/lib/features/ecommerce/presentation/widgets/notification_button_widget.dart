@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-class NotificationButton extends StatelessWidget {
-  const NotificationButton({
+import '../../../../core/constants.dart';
+import '../../../auth/presentation/bloc/auth_bloc.dart';
+
+class LogoutButton extends StatelessWidget {
+  const LogoutButton({
     super.key,
   });
 
@@ -10,15 +14,17 @@ class NotificationButton extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(right: 20),
       child: TextButton(
-          onPressed: () {},
+          onPressed: () {
+            context.read<AuthBloc>().add(AuthSignOutEvent());
+          },
           child: Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(5),
               border: Border.all(color: Colors.grey.shade400),
             ),
             child: Icon(
-              Icons.notification_add_outlined,
-              color: Colors.grey.shade600,
+              Icons.logout_rounded,
+              color: primaryColor,
             ),
           )),
     );

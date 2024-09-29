@@ -55,7 +55,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       emit(AuthSignOutLoading());
 
       final reslut = await logoutUseCase.call();
-
+      await Future.delayed(const Duration(seconds: 2));
       reslut.fold((failure) => emit(AuthFailure(failure)),
           (unit) => emit(AuthSignOutSuccess()));
     });

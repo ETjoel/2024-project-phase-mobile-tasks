@@ -15,6 +15,15 @@ import 'features/auth/domain/usecases/login_usecase.dart';
 import 'features/auth/domain/usecases/logout_usecase.dart';
 import 'features/auth/domain/usecases/register_usecase.dart';
 import 'features/auth/presentation/bloc/auth_bloc.dart';
+import 'features/chat/data/datasource/local_datasource/local_datasource.dart';
+import 'features/chat/data/datasource/remote_datasource/remote_datasource.dart';
+import 'features/chat/data/repository/chat_repository_impl.dart';
+import 'features/chat/domain/repository/chat_respository.dart';
+import 'features/chat/domain/usecases/delete_chat.dart';
+import 'features/chat/domain/usecases/get_chat_message_usecase.dart';
+import 'features/chat/domain/usecases/initiate_chat_usecase.dart';
+import 'features/chat/domain/usecases/view_my_chats_usecase.dart';
+import 'features/chat/presentation/bloc/chat_bloc.dart';
 import 'features/ecommerce/data/datasource/product_local_datasource.dart';
 import 'features/ecommerce/data/datasource/product_remote_datasource.dart';
 import 'features/ecommerce/data/repositories/product_respository_impl.dart';
@@ -43,6 +52,12 @@ Future<void> init() async {
       registerUserCase: sl(),
       logoutUseCase: sl()));
 
+  sl.registerFactory(() => ChatBloc(
+      viewMyChatsUseCase: sl(),
+      initiateChatUseCase: sl(),
+      getChatMessageUseCase: sl(),
+      deleteChatUseCase: sl()));
+
 //usecases
   sl.registerLazySingleton(() => ViewAllProductsUseCase(sl()));
   sl.registerLazySingleton(() => ViewProductUsecase(sl()));
@@ -53,6 +68,10 @@ Future<void> init() async {
   sl.registerLazySingleton(() => GetUserUseCase(sl()));
   sl.registerLazySingleton(() => RegisterUserCase(sl()));
   sl.registerLazySingleton(() => LogoutUseCase(sl()));
+  sl.registerLazySingleton(() => ViewMyChatsUseCase(sl()));
+  sl.registerLazySingleton(() => InitiateChatUseCase(sl()));
+  sl.registerLazySingleton(() => GetChatMessageUseCase(sl()));
+  sl.registerLazySingleton(() => DeleteChatUseCase(sl()));
 
 //repositories
   sl.registerLazySingleton<ProductRepository>(() => ProductRepositoryImpl(
@@ -64,6 +83,9 @@ Future<void> init() async {
       authRemoteDataSource: sl(),
       authLocalDataSource: sl(),
       networkInfo: sl()));
+
+  sl.registerLazySingleton<ChatRepository>(
+      () => ChatRepositoryImpl(sl(), sl(), sl(), sl()));
 
 //datasources
   sl.registerLazySingleton<ProductLocalDataSource>(
@@ -77,6 +99,12 @@ Future<void> init() async {
 
   sl.registerLazySingleton<AuthLocalDataSource>(
       () => AuthLocalDataSourceImp(sl()));
+
+  sl.registerLazySingleton<ChatRemoteDataSource>(
+      () => ChatRemoteDataSourceImpl(sl(), sl()));
+
+  sl.registerLazySingleton<ChatLocalDataSource>(
+      () => ChatLocalDataSourceImpl(sl()));
 //core
   sl.registerLazySingleton<NetworkInfo>(
       () => NetworkInfoImpl(internetConnectionChecker: sl()));
