@@ -1,26 +1,12 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/constants.dart';
+import '../../../auth/domain/entities/user.dart';
 import '../widgets/widgets.dart';
 
-class DemoChatPage extends StatelessWidget {
-  const DemoChatPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.white),
-          canvasColor: Colors.white,
-          useMaterial3: true,
-        ),
-        home: const ChatPage());
-  }
-}
-
 class ChatPage extends StatefulWidget {
-  const ChatPage({super.key});
+  final UserEntity user;
+  const ChatPage({required this.user, super.key});
 
   @override
   State<ChatPage> createState() => _ChatPageState();
@@ -40,10 +26,10 @@ class _ChatPageState extends State<ChatPage> {
                 size: 15,
                 color: primaryColor,
               )),
-          title: const Row(
+          title: Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              UserInfo(name: 'John', members: 8, onlines: 5),
+              UserInfo(name: widget.user.name, members: 8, onlines: 5),
             ],
           ),
           actions: [

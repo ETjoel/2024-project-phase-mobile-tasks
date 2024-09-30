@@ -6,8 +6,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../core/constants.dart';
 import '../../../auth/domain/entities/user.dart';
 import '../../../ecommerce/presentation/widgets/three_dot_waiting_widget.dart';
+import '../../domain/entities/chat_entity.dart';
 import '../bloc/chat_bloc.dart';
-import '../widgets/chat_user_widget.dart';
+import '../widgets/chatlist_widget.dart';
 
 class ChatListPage extends StatefulWidget {
   final UserEntity user;
@@ -19,6 +20,7 @@ class ChatListPage extends StatefulWidget {
 
 class _ChatListPageState extends State<ChatListPage> {
   double _dragOffset = 0.0;
+  List<ChatEntity> chatList = [];
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -109,24 +111,20 @@ class _ChatListPageState extends State<ChatListPage> {
                             ),
                           );
                         } else if (state is ChatListLoaded) {
-                          if (state.chatList.isEmpty) {
+                          chatList = state.chatList;
+                          if (chatList.isEmpty) {
                             return const Text('No Chats');
                           }
-                          final chatList = state.chatList;
-                          return Expanded(
-                              child: ListView.builder(
-                                  itemCount: state.chatList.length,
-                                  itemBuilder: (context, index) {
-                                    return ChatUser(
-                                        user: widget.user.id !=
-                                                chatList[index].user2.id
-                                            ? chatList[index].user2
-                                            : chatList[index].user1);
-                                  }));
+                          return ChatListWidget(
+                              chatList: chatList, user: widget.user);
                         } else if (state is ChatError) {
                           return Text(state.message);
                         } else {
-                          return const Text('No Data');
+                          if (chatList.isEmpty) {
+                            return const Text('No Data');
+                          }
+                          return ChatListWidget(
+                              chatList: chatList, user: widget.user);
                         }
                       },
                     )

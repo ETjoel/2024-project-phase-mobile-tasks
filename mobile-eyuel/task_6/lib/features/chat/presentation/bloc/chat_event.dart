@@ -12,8 +12,8 @@ final class InitiateChatEvent extends ChatEvent {
 final class LoadMyChatListEvent extends ChatEvent {}
 
 final class GetChatMessagesEvent extends ChatEvent {
-  final String userId;
-  GetChatMessagesEvent({required this.userId});
+  final String chatId;
+  GetChatMessagesEvent({required this.chatId});
 }
 
 final class DeleteChatEvent extends ChatEvent {

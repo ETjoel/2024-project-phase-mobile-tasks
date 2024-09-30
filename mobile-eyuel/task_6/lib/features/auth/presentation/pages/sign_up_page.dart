@@ -54,7 +54,7 @@ class SignUpPage extends StatelessWidget {
               ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                   backgroundColor: Colors.red,
                   content: Text(state.failure.message,
-                      style: TextStyle(color: Colors.white))));
+                      style: const TextStyle(color: Colors.white))));
             }
             if (state is AuthGetUserSuccess) {
               Navigator.pushNamed(context, '/home');

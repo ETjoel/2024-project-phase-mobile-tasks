@@ -46,7 +46,6 @@ class MyApp extends StatelessWidget {
               context.read<ProductBloc>().add(LoadAllProductsEvent());
               return const HomePage();
             },
-            '/chatroom': (context) => const ChatPage(),
             '/signin': (context) => SignInPage(),
             '/signup': (context) => SignUpPage(),
           },
@@ -62,6 +61,11 @@ class MyApp extends StatelessWidget {
                   );
                 },
               );
+            } else if (settings.name == '/chatroom') {
+              final user = settings.arguments as UserEntity;
+              return MaterialPageRoute(builder: (context) {
+                return ChatPage(user: user);
+              });
             }
             return null;
           },

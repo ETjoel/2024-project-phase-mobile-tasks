@@ -48,7 +48,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
     on<GetChatMessagesEvent>((event, emit) async {
       emit(ChatRoomMessageLoading());
 
-      final result = await getChatMessageUseCase.call(event.userId);
+      final result = await getChatMessageUseCase.call(event.chatId);
 
       result.fold(
         (failure) => emit(ChatError(message: failure.message)),
