@@ -1,28 +1,17 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/constants.dart';
+import '../../../auth/domain/entities/user.dart';
+import '../../../ecommerce/presentation/widgets/three_dot_waiting_widget.dart';
+import '../bloc/chat_bloc.dart';
 import '../widgets/chat_user_widget.dart';
 
-class DemoChatListPage extends StatelessWidget {
-  const DemoChatListPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.white),
-          canvasColor: Colors.white,
-          useMaterial3: true,
-        ),
-        home: const ChatListPage());
-  }
-}
-
 class ChatListPage extends StatefulWidget {
-  const ChatListPage({super.key});
+  final UserEntity user;
+  const ChatListPage({required this.user, super.key});
 
   @override
   State<ChatListPage> createState() => _ChatListPageState();
@@ -110,12 +99,37 @@ class _ChatListPageState extends State<ChatListPage> {
                       ),
                     ),
                     const SizedBox(height: 20),
-                    Expanded(
-                        child: ListView.builder(
-                            itemCount: 40,
-                            itemBuilder: (context, index) {
-                              return const ChatUser();
-                            }))
+                    BlocBuilder<ChatBloc, ChatState>(
+                      builder: (context, state) {
+                        if (state is ChatListLoading) {
+                          return const Center(
+                            child: ThreeDotWaiting(
+                              size: 10,
+                              color: primaryColor,
+                            ),
+                          );
+                        } else if (state is ChatListLoaded) {
+                          if (state.chatList.isEmpty) {
+                            return const Text('No Chats');
+                          }
+                          final chatList = state.chatList;
+                          return Expanded(
+                              child: ListView.builder(
+                                  itemCount: state.chatList.length,
+                                  itemBuilder: (context, index) {
+                                    return ChatUser(
+                                        user: widget.user.id !=
+                                                chatList[index].user2.id
+                                            ? chatList[index].user2
+                                            : chatList[index].user1);
+                                  }));
+                        } else if (state is ChatError) {
+                          return Text(state.message);
+                        } else {
+                          return const Text('No Data');
+                        }
+                      },
+                    )
                   ]),
                 ),
               ),

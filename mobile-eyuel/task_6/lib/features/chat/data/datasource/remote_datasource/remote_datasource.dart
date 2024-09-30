@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -31,7 +32,7 @@ class ChatRemoteDataSourceImpl implements ChatRemoteDataSource {
     if (token != null) {
       final result = await client.delete(Uri.parse('$baseUrl/$chatId'),
           headers: {
-            'Authorization': token,
+            'Authorization': 'Bearer $token',
             'Content-Type': 'application/json'
           });
       if (result.statusCode == 200) {
@@ -50,7 +51,7 @@ class ChatRemoteDataSourceImpl implements ChatRemoteDataSource {
     if (token != null) {
       final response = await client.get(Uri.parse('$baseUrl/$userId/messages'),
           headers: {
-            'Authorization': token,
+            'Authorization': 'Bearer $token',
             'Content-Type': 'application/json'
           });
       if (response.statusCode == 200) {
@@ -73,7 +74,7 @@ class ChatRemoteDataSourceImpl implements ChatRemoteDataSource {
     if (token != null) {
       final response = await client.get(Uri.parse('$baseUrl/$chatId'),
           headers: {
-            'Authorization': token,
+            'Authorization': 'Bearer $token',
             'Content-Type': 'application/json'
           });
 
@@ -92,7 +93,7 @@ class ChatRemoteDataSourceImpl implements ChatRemoteDataSource {
     final token = sharedPreferences.getString(tTokenKey);
     if (token != null) {
       return client.get(Uri.parse(baseUrl), headers: {
-        'Authorization': token,
+        'Authorization': 'Bearer $token',
         'Content-Type': 'application/json'
       }).then((response) {
         if (response.statusCode == 200) {
@@ -117,7 +118,7 @@ class ChatRemoteDataSourceImpl implements ChatRemoteDataSource {
       return client
           .post(Uri.parse(baseUrl),
               headers: {
-                'Authorization': token,
+                'Authorization': 'Bearer $token',
                 'Content-Type': 'application/json'
               },
               body: jsonEncode({'userId': receiverId}))

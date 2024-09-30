@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'core/constants.dart';
+import 'features/auth/domain/entities/user.dart';
 import 'features/auth/presentation/bloc/auth_bloc.dart';
 import 'features/auth/presentation/pages/sign_in_page.dart';
 import 'features/auth/presentation/pages/sign_up_page.dart';
+import 'features/chat/presentation/bloc/chat_bloc.dart';
 import 'features/chat/presentation/pages/chat_list_page.dart';
 import 'features/chat/presentation/pages/chatroom_page.dart';
 import 'features/ecommerce/presentation/bloc/product_bloc/product_bloc.dart';
@@ -43,19 +46,34 @@ class MyApp extends StatelessWidget {
               context.read<ProductBloc>().add(LoadAllProductsEvent());
               return const HomePage();
             },
-            '/chatlist': (context) {
-              return const ChatListPage();
-            },
             '/chatroom': (context) => const ChatPage(),
             '/signin': (context) => SignInPage(),
             '/signup': (context) => SignUpPage(),
+          },
+          onGenerateRoute: (settings) {
+            if (settings.name == '/chatlist') {
+              final user = settings.arguments as UserEntity;
+              return MaterialPageRoute(
+                builder: (context) {
+                  return BlocProvider(
+                    create: (context) =>
+                        sl<ChatBloc>()..add(LoadMyChatListEvent()),
+                    child: ChatListPage(user: user),
+                  );
+                },
+              );
+            }
+            return null;
           },
           home: BlocBuilder<AuthBloc, AuthState>(
             builder: (context, state) {
               if (state is AuthGetUserLoading) {
                 return const Scaffold(
                   body: Center(
-                    child: ThreeDotWaiting(size: 20),
+                    child: ThreeDotWaiting(
+                      size: 20,
+                      color: primaryColor,
+                    ),
                   ),
                 );
               } else if (state is AuthGetUserSuccess) {

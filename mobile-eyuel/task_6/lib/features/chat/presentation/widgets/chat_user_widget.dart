@@ -1,16 +1,12 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/constants.dart';
+import '../../../auth/domain/entities/user.dart';
 import 'widgets.dart';
 
-class ChatUser extends StatefulWidget {
-  const ChatUser({super.key});
-
-  @override
-  State<ChatUser> createState() => _ChatUserState();
-}
-
-class _ChatUserState extends State<ChatUser> {
+class ChatUser extends StatelessWidget {
+  final UserEntity user;
+  const ChatUser({required this.user, super.key});
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -36,9 +32,9 @@ class _ChatUserState extends State<ChatUser> {
             children: [
               SizedBox(
                 width: size.width * 0.5,
-                child: const Text('name',
+                child: Text(user.name,
                     overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
+                    style: const TextStyle(
                         fontFamily: 'Sora',
                         fontSize: 20,
                         fontWeight: FontWeight.bold)),

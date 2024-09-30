@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../core/constants.dart';
+import '../../../auth/domain/entities/user.dart';
 import '../../../auth/presentation/bloc/auth_bloc.dart';
 import '../bloc/product_bloc/product_bloc.dart';
 import '../widgets/widget.dart';
@@ -25,7 +26,13 @@ class _HomePageState extends State<HomePage> {
       floatingActionButton: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          floatingChatButton(),
+          BlocBuilder<AuthBloc, AuthState>(builder: (context, state) {
+            if (state is AuthGetUserSuccess) {
+              return floatingChatButton(state.user);
+            } else {
+              return const SizedBox();
+            }
+          }),
           const SizedBox(height: 10),
           floatingButton(context),
         ],
@@ -55,13 +62,13 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  FloatingActionButton floatingChatButton() {
+  FloatingActionButton floatingChatButton(UserEntity user) {
     return FloatingActionButton(
       shape: const CircleBorder(),
       backgroundColor: primaryColor,
       heroTag: 'chat',
       onPressed: () {
-        Navigator.pushNamed(context, '/chatlist');
+        Navigator.pushNamed(context, '/chatlist', arguments: user);
       },
       child: const Icon(Icons.chat, color: Colors.white),
     );

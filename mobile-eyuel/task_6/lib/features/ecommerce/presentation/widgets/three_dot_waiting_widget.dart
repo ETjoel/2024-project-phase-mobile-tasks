@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 
 class ThreeDotWaiting extends StatefulWidget {
   final double size;
+  final Color color;
   const ThreeDotWaiting({
     Key? key,
     required this.size,
+    this.color = Colors.white,
   }) : super(key: key ?? const Key('THREE_DOT_WAITING'));
 
   @override
@@ -112,8 +114,7 @@ class _ThreeDotWaitingState extends State<ThreeDotWaiting>
     return Container(
       width: widget.size,
       height: widget.size,
-      decoration:
-          const BoxDecoration(shape: BoxShape.circle, color: Colors.white),
+      decoration: BoxDecoration(shape: BoxShape.circle, color: widget.color),
     );
   }
 }
