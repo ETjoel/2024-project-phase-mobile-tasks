@@ -28,11 +28,11 @@ import 'features/ecommerce/data/datasource/product_local_datasource.dart';
 import 'features/ecommerce/data/datasource/product_remote_datasource.dart';
 import 'features/ecommerce/data/repositories/product_respository_impl.dart';
 import 'features/ecommerce/domain/repositories/product_respository.dart';
-import 'features/ecommerce/domain/usecases/create_new_product.dart';
+import 'features/ecommerce/domain/usecases/create_new_product_usecase.dart';
 import 'features/ecommerce/domain/usecases/delete_product_usecase.dart';
-import 'features/ecommerce/domain/usecases/update_product.dart';
-import 'features/ecommerce/domain/usecases/view_all_products.dart';
-import 'features/ecommerce/domain/usecases/view_single_product.dart';
+import 'features/ecommerce/domain/usecases/update_product_usecase.dart';
+import 'features/ecommerce/domain/usecases/view_all_products_usecase.dart';
+import 'features/ecommerce/domain/usecases/view_single_product_usecase.dart';
 import 'features/ecommerce/presentation/bloc/product_bloc/product_bloc.dart';
 
 final sl = get_it.GetIt.instance;

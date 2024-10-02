@@ -3,11 +3,11 @@ import 'package:equatable/equatable.dart';
 
 import '../../../data/models/product_model.dart';
 import '../../../domain/entities/product.dart';
-import '../../../domain/usecases/create_new_product.dart';
+import '../../../domain/usecases/create_new_product_usecase.dart';
 import '../../../domain/usecases/delete_product_usecase.dart';
-import '../../../domain/usecases/update_product.dart';
-import '../../../domain/usecases/view_all_products.dart';
-import '../../../domain/usecases/view_single_product.dart';
+import '../../../domain/usecases/update_product_usecase.dart';
+import '../../../domain/usecases/view_all_products_usecase.dart';
+import '../../../domain/usecases/view_single_product_usecase.dart';
 
 part 'product_event.dart';
 part 'product_state.dart';

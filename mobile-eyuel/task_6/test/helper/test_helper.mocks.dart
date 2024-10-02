@@ -44,15 +44,15 @@ import 'package:task_6/features/ecommerce/data/models/product_model.dart'
 import 'package:task_6/features/ecommerce/domain/entities/product.dart' as _i13;
 import 'package:task_6/features/ecommerce/domain/repositories/product_respository.dart'
     as _i6;
-import 'package:task_6/features/ecommerce/domain/usecases/create_new_product.dart'
+import 'package:task_6/features/ecommerce/domain/usecases/create_new_product_usecase.dart'
     as _i22;
 import 'package:task_6/features/ecommerce/domain/usecases/delete_product_usecase.dart'
     as _i24;
-import 'package:task_6/features/ecommerce/domain/usecases/update_product.dart'
+import 'package:task_6/features/ecommerce/domain/usecases/update_product_usecase.dart'
     as _i23;
-import 'package:task_6/features/ecommerce/domain/usecases/view_all_products.dart'
+import 'package:task_6/features/ecommerce/domain/usecases/view_all_products_usecase.dart'
     as _i20;
-import 'package:task_6/features/ecommerce/domain/usecases/view_single_product.dart'
+import 'package:task_6/features/ecommerce/domain/usecases/view_single_product_usecase.dart'
     as _i21;
 import 'package:task_6/features/ecommerce/presentation/pages/add_product_page.dart'
     as _i25;
@@ -934,8 +934,8 @@ class MockViewAllProductsUseCase extends _i1.Mock
           #call,
           [],
         ),
-        returnValue: _i11
-            .Future<_i2.Either<_i12.Failure, List<_i13.ProductEntity>>>.value(
+        returnValue: _i11.Future<
+                _i2.Either<_i12.Failure, List<_i13.ProductEntity>>>.value(
             _FakeEither_0<_i12.Failure, List<_i13.ProductEntity>>(
           this,
           Invocation.method(

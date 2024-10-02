@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:mockito/mockito.dart';
 import 'package:task_6/features/ecommerce/domain/entities/product.dart';
-import 'package:task_6/features/ecommerce/domain/usecases/view_single_product.dart';
+import 'package:task_6/features/ecommerce/domain/usecases/view_single_product_usecase.dart';
 import 'package:test/test.dart';
 
 import '../../../../helper/test_helper.mocks.dart';

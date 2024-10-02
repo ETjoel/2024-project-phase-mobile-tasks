@@ -12,11 +12,11 @@ import 'package:task_6/features/chat/domain/repository/chat_respository.dart';
 import 'package:task_6/features/ecommerce/data/datasource/product_local_datasource.dart';
 import 'package:task_6/features/ecommerce/data/datasource/product_remote_datasource.dart';
 import 'package:task_6/features/ecommerce/domain/repositories/product_respository.dart';
-import 'package:task_6/features/ecommerce/domain/usecases/create_new_product.dart';
+import 'package:task_6/features/ecommerce/domain/usecases/create_new_product_usecase.dart';
 import 'package:task_6/features/ecommerce/domain/usecases/delete_product_usecase.dart';
-import 'package:task_6/features/ecommerce/domain/usecases/update_product.dart';
-import 'package:task_6/features/ecommerce/domain/usecases/view_all_products.dart';
-import 'package:task_6/features/ecommerce/domain/usecases/view_single_product.dart';
+import 'package:task_6/features/ecommerce/domain/usecases/update_product_usecase.dart';
+import 'package:task_6/features/ecommerce/domain/usecases/view_all_products_usecase.dart';
+import 'package:task_6/features/ecommerce/domain/usecases/view_single_product_usecase.dart';
 import 'package:task_6/features/ecommerce/presentation/pages/add_product_page.dart';
 
 @GenerateMocks([
