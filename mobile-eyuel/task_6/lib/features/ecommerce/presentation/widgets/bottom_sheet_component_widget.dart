@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../core/constants.dart';
 import '../pages/search_product_page.dart';
 import 'add_product_button_widget.dart';
 import 'custom_text_field_widget.dart';
@@ -43,25 +44,32 @@ class _BottomSheetComponentState extends State<BottomSheetComponent> {
     );
   }
 
-  RangeSlider rangeWidget() {
-    return RangeSlider(
-      values: widget.searchPageStateController.currentRangeValues,
-      activeColor: const Color.fromRGBO(63, 81, 243, 1),
-      inactiveColor: Colors.grey.shade300,
-      onChanged: (RangeValues value) {
-        setState(() {
-          widget.searchPageStateController.currentRangeValues = value;
-        });
-      },
-      min: 0,
-      max: 1000,
-      labels: RangeLabels(
-        widget.searchPageStateController.currentRangeValues.start
-            .round()
-            .toString(),
-        widget.searchPageStateController.currentRangeValues.end
-            .round()
-            .toString(),
+  Widget rangeWidget() {
+    return SliderTheme(
+      data: const SliderThemeData(
+        valueIndicatorTextStyle: TextStyle(color: primaryColor),
+        valueIndicatorColor: Colors.white,
+        showValueIndicator: ShowValueIndicator.always,
+      ),
+      child: RangeSlider(
+        values: widget.searchPageStateController.currentRangeValues,
+        activeColor: primaryColor,
+        inactiveColor: Colors.grey.shade300,
+        onChanged: (RangeValues value) {
+          setState(() {
+            widget.searchPageStateController.currentRangeValues = value;
+          });
+        },
+        min: 0,
+        max: 1000,
+        labels: RangeLabels(
+          widget.searchPageStateController.currentRangeValues.start
+              .round()
+              .toString(),
+          widget.searchPageStateController.currentRangeValues.end
+              .round()
+              .toString(),
+        ),
       ),
     );
   }

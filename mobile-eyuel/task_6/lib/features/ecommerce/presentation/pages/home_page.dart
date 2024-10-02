@@ -48,8 +48,8 @@ class _HomePageState extends State<HomePage> {
                   );
                 });
           } else if (state is AuthSignOutSuccess) {
-            Navigator.pushNamedAndRemoveUntil(
-                context, '/signin', (Route<dynamic> route) => false);
+            Navigator.pop(context);
+            Navigator.pushReplacementNamed(context, '/signin');
           }
         },
         child: const Column(

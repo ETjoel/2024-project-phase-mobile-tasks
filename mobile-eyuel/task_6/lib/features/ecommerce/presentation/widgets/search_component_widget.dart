@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../bloc/product_bloc/product_bloc.dart';
 import '../pages/search_product_page.dart';
 
 class SearchComponent extends StatelessWidget {
@@ -41,8 +43,10 @@ class SearchComponent extends StatelessWidget {
 
   PageRouteBuilder<dynamic> pageTransition() {
     return PageRouteBuilder(
-      pageBuilder: (context, animation, secondaryAnimation) =>
-          const SearchProduct(),
+      pageBuilder: (context, animation, secondaryAnimation) {
+        context.read<ProductBloc>().add(LoadAllProductsEvent());
+        return const SearchProduct();
+      },
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
         const begin = Offset(1.0, 0.0);
         const end = Offset.zero;

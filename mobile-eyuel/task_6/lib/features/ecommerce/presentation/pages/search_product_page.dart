@@ -91,6 +91,7 @@ class _SearchProductState extends State<SearchProduct> {
   }
 
   Widget searchNFilterComponent() {
+    final size = MediaQuery.of(context).size;
     return Row(
       children: [
         SearchTextField(
@@ -101,12 +102,11 @@ class _SearchProductState extends State<SearchProduct> {
             });
           },
         ),
-        const Spacer(),
         TextButton(
           onPressed: _toggleBottomSheet,
           child: Container(
-            width: 40,
-            height: 40,
+            width: size.width * 0.1,
+            height: size.width * 0.11,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(7),
               color: const Color.fromRGBO(63, 81, 243, 1),

@@ -36,9 +36,8 @@ class _AddProductPageState extends State<AddProductPage> {
         leading: const ArrowNewIosBackButton(),
         title: const Text('Add Product'),
       ),
-      body: BlocBuilder<ProductBloc, ProductState>(
-        builder: (context, state) {
-          WidgetsBinding.instance.addPostFrameCallback((_) {
+      body: BlocListener<ProductBloc, ProductState>(
+          listener: (context, state) {
             if (state is CreateProductLoading) {
               showDialog(
                 context: context,
@@ -49,10 +48,7 @@ class _AddProductPageState extends State<AddProductPage> {
                 },
               );
             } else if (state is CreateProductLoaded) {
-              context.read<ProductBloc>().add(LoadAllProductsEvent());
-
               Navigator.pop(context);
-              Navigator.pop(context, true);
 
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(
@@ -63,7 +59,7 @@ class _AddProductPageState extends State<AddProductPage> {
                 ),
               );
             } else if (state is ProductError) {
-              Navigator.pop(context, true);
+              Navigator.pop(context);
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   behavior: SnackBarBehavior.floating,
@@ -73,13 +69,13 @@ class _AddProductPageState extends State<AddProductPage> {
                 ),
               );
             }
-          });
-          return SingleChildScrollView(
+          },
+          child: SingleChildScrollView(
             padding: const EdgeInsets.all(20),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // ImagePickerWidget(imagePickerController: imagePickerController),
+                ImagePickerWidget(imagePickerController: imagePickerController),
                 const SizedBox(height: 10),
                 const Text('name'),
                 const SizedBox(height: 10),
@@ -124,9 +120,7 @@ class _AddProductPageState extends State<AddProductPage> {
                 }),
               ],
             ),
-          );
-        },
-      ),
+          )),
     );
   }
 

@@ -13,9 +13,10 @@ class SearchTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return Container(
       alignment: Alignment.center,
-      width: 300,
+      width: size.width * 0.73,
       height: 40,
       child: TextField(
         controller: nameController,
